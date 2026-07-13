@@ -1,0 +1,6 @@
+# config-src/ holds the real files that every symlink_* stub points at.
+# It must exist on disk inside the source dir, but must never be deployed
+# as a literal ~/config-src directory.
+config-src
+
+.DS_Store

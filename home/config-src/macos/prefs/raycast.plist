@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSNavPanelExpandedSizeForOpenMode</key>
+	<string>{880, 448}</string>
+	<key>NSOSPLastRootDirectory</key>
+	<data>
+	Ym9va7ACAAAAAAUQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	AAAAAAAAAAAAAAAAAJABAAAEAAAAAwMAAAAAACAFAAAAAQEAAFVzZXJzAAAADAAAAAEB
+	AABha3NheWthbnRoYW4JAAAAAQEAAERvd25sb2FkcwAAAAwAAAABBgAAEAAAACAAAAA0
+	AAAACAAAAAQDAACdRwAAAAAAAAgAAAAEAwAAL4QEAAAAAAAIAAAABAMAAGKEBAAAAAAA
+	DAAAAAEGAABcAAAAbAAAAHwAAAAIAAAAAAQAAEHHaQCdA1+5GAAAAAECAAACAAAAAAAA
+	AA8AAAAAAAAAAAAAAAAAAAAAAAAAAQUAAAgAAAAEAwAAAQAAAAAAAAAEAAAAAwMAAPUB
+	AAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAABAMAAACQYpPn
+	AAAACAAAAAAEAABBx9+ALwAAACQAAAABAQAAMDY4OURFQzAtRkJEMC00NkE3LUE0NTct
+	OUQ0RTZCMjgxNTBBGAAAAAECAACBAAAAAQAAAO8TAAABAAAAAAAAAAAAAAABAAAAAQEA
+	AC8AAADYAAAA/v///wEAAAAAAAAAEQAAAAQQAABIAAAAAAAAAAUQAACMAAAAAAAAABAQ
+	AACwAAAAAAAAAEAQAACgAAAAAAAAAAIgAACEAQAAAAAAAAUgAAD0AAAAAAAAABAgAAAE
+	AQAAAAAAABEgAAA4AQAAAAAAABIgAAAYAQAAAAAAABMgAAAoAQAAAAAAACAgAABkAQAA
+	AAAAADAgAADQAAAAAAAAAAHAAADYAAAAAAAAABHAAAAgAAAAAAAAABLAAADoAAAAAAAA
+	AAHQAADQAAAAAAAAABDQAAAEAAAAAAAAAA==
+	</data>
+	<key>NSWindow Frame NSSpellCheckerSpellingPanel</key>
+	<string>524 482 431 289 0 0 1800 1130 </string>
+	<key>NSWindow Frame NSSpellCheckerSubstitutionsPanel2</key>
+	<string>692 399 359 150 0 0 1800 1130 </string>
+	<key>NSWindow Frame notes-window</key>
+	<string>1364 929 396 140 0 0 1800 1130 </string>
+	<key>NSWindow Frame settings-window</key>
+	<string>408 125 800 786 0 0 1800 1130 </string>
+	<key>NSWindow Frame welcome-window</key>
+	<string>260 307 1280 760 0 0 1800 1130 </string>
+	<key>RaycastDictationInputDevicePriorityOrder</key>
+	<array>
+		<string>BuiltInMicrophoneDevice</string>
+		<string>9C-DE-F0-96-22-74:input</string>
+	</array>
+	<key>RaycastDictationUseSystemDefaultInput</key>
+	<true/>
+	<key>raycast_AnonymousId</key>
+	<string>921A254B-626F-4038-BA99-C2DE4470A8B9</string>
+	<key>raycast_HasOpenedRaycastNotes</key>
+	<true/>
+	<key>raycast_OnboardingCompleted</key>
+	<true/>
+	<key>raycast_ShowWindowsImmediately</key>
+	<false/>
+	<key>raycast_WelcomeTosAccepted</key>
+	<true/>
+	<key>raycast_WindowCacheMode_v2</key>
+	<string>auto</string>
+	<key>raycast_window_cachedPosition_main</key>
+	<dict/>
+	<key>raycast_window_cachedPosition_notes</key>
+	<dict>
+		<key>1{1800, 1169}</key>
+		<dict>
+			<key>x</key>
+			<real>1364</real>
+			<key>y</key>
+			<real>1069</real>
+		</dict>
+	</dict>
+	<key>raycast_window_cachedPosition_settings</key>
+	<dict>
+		<key>1{1800, 1169}</key>
+		<dict>
+			<key>x</key>
+			<real>408</real>
+			<key>y</key>
+			<real>911</real>
+		</dict>
+	</dict>
+</dict>
+</plist>

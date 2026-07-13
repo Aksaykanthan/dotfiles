@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeyboardShortcuts_toggleNotchOpen</key>
+	<string>{"carbonKeyCode":34,"carbonModifiers":768}</string>
+	<key>KeyboardShortcuts_toggleSneakPeek</key>
+	<string>{"carbonKeyCode":4,"carbonModifiers":768}</string>
+	<key>NSNavPanelExpandedSizeForOpenMode</key>
+	<string>{880, 448}</string>
+	<key>NSOSPLastRootDirectory</key>
+	<data>
+	Ym9vawADAAAAAAUQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	AAAAAAAAAAAAAAAAAMgBAAAEAAAAAwMAAAAEAAAFAAAAAQEAAFVzZXJzAAAADAAAAAEB
+	AABha3NheWthbnRoYW4JAAAAAQEAAERvY3VtZW50cwAAAAwAAAABBgAAEAAAACAAAAA0
+	AAAACAAAAAQDAACdRwAAAAAAAAgAAAAEAwAAL4QEAAAAAAAIAAAABAMAAGCEBAAAAAAA
+	DAAAAAEGAABcAAAAbAAAAHwAAAAIAAAAAAQAAEHHaQCdAz+cGAAAAAECAAACAAAAAAAA
+	AB8CAAAAAAAAHwIAAAAAAAAAAAAAAQUAAAgAAAAEAwAAAQAAAAAAAAAEAAAAAwMAAPUB
+	AAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAABAMAAACQYpPn
+	AAAACAAAAAAEAABBx2j7dAAAACQAAAABAQAAMDY4OURFQzAtRkJEMC00NkE3LUE0NTct
+	OUQ0RTZCMjgxNTBBGAAAAAECAACBAAAAAQAAAO8TAAABAAAA7xMAAAEAAAABAAAAAQEA
+	AC8AAAAwAAAAAQIAAGRuaWIAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHNj
+	b2QCAAAAAAAAAPAAAAD+////AQAAAAAAAAATAAAABBAAAEgAAAAAAAAABRAAAIwAAAAA
+	AAAAEBAAALAAAAAAAAAAQBAAAKAAAAAAAAAAAiAAAIQBAAAAAAAABSAAAPQAAAAAAAAA
+	ECAAAAQBAAAAAAAAESAAADgBAAAAAAAAEiAAABgBAAAAAAAAEyAAACgBAAAAAAAAICAA
+	AGQBAAAAAAAAMCAAANAAAAAAAAAAAcAAANgAAAAAAAAAEcAAACAAAAAAAAAAEsAAAOgA
+	AAAAAAAAAdAAANAAAAAAAAAAENAAAAQAAAAAAAAAF/AAADQAAAAAAAAAIvAAAJABAAAA
+	AAAA
+	</data>
+	<key>NSStatusItem VisibleCC Item-0</key>
+	<false/>
+	<key>SUAutomaticallyUpdate</key>
+	<false/>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+	<key>SUHasLaunchedBefore</key>
+	<true/>
+	<key>SUSendProfileInfo</key>
+	<false/>
+	<key>alwaysShowTabs</key>
+	<true/>
+	<key>cornerRadiusScaling</key>
+	<true/>
+	<key>didClearLegacyURLCache_v1</key>
+	<true/>
+	<key>enableGestures</key>
+	<true/>
+	<key>enableGradient</key>
+	<false/>
+	<key>enableLyrics</key>
+	<false/>
+	<key>extendHoverArea</key>
+	<false/>
+	<key>firstLaunch</key>
+	<false/>
+	<key>hideTitleBar</key>
+	<false/>
+	<key>hudReplacement</key>
+	<true/>
+	<key>inlineHUD</key>
+	<false/>
+	<key>mediaController</key>
+	<string>Now Playing</string>
+	<key>menubarIcon</key>
+	<false/>
+	<key>minimumHoverDuration</key>
+	<real>0.20000000000000001</real>
+	<key>musicControlSlots</key>
+	<array>
+		<string>"repeatMode"</string>
+		<string>"previous"</string>
+		<string>"playPause"</string>
+		<string>"next"</string>
+		<string>"favorite"</string>
+	</array>
+	<key>notchHeight</key>
+	<real>38</real>
+	<key>notchHeightMode</key>
+	<string>Match real notch height</string>
+	<key>openLastTabByDefault</key>
+	<false/>
+	<key>preferred_screen_uuid</key>
+	<string>37D8832A-2D66-02CA-B9F7-8F30A301B230</string>
+	<key>showCalendar</key>
+	<true/>
+	<key>showClosedNotchHUDPercentage</key>
+	<false/>
+	<key>showMirror</key>
+	<true/>
+	<key>showNotHumanFace</key>
+	<true/>
+	<key>sneakPeekStyles</key>
+	<string>Default</string>
+	<key>systemEventIndicatorShadow</key>
+	<true/>
+	<key>systemEventIndicatorUseAccent</key>
+	<false/>
+	<key>useCustomAccentColor</key>
+	<false/>
+</dict>
+</plist>

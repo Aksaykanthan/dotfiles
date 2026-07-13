@@ -1,0 +1,12 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# sleepwatcher expects ~/.wakeup and ~/.sleep to be executable.
+chmod +x "{{ .chezmoi.sourceDir }}/config-src/macos/scripts/wakeup" \
+         "{{ .chezmoi.sourceDir }}/config-src/macos/scripts/sleep" 2>/dev/null || true
+
+if command -v brew >/dev/null 2>&1; then
+  brew services start sleepwatcher >/dev/null 2>&1 || true
+fi
+{{ end -}}

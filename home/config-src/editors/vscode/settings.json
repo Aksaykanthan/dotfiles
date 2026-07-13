@@ -1,0 +1,5 @@
+{
+    "git.autofetch": true,
+    "files.autoSave": "afterDelay",
+    "workbench.startupEditor": "none"
+}

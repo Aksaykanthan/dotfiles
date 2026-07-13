@@ -1,0 +1,94 @@
+$schema: https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+version: 3
+final_space: true
+console_title_template: '{{ .Shell }} in {{ .Folder }}'
+
+blocks:
+  - type: prompt
+    alignment: left
+    segments:
+      - type: os
+        style: diamond
+        leading_diamond: "╭─"
+        foreground: p:white
+        background: p:black
+        template: " {{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+
+      - type: path
+        style: powerline
+        powerline_symbol: 
+        foreground: p:black
+        background: p:blue
+        properties:
+          style: agnoster_short
+          max_depth: 3
+        template: " 󰉋 {{ .Path }} "
+
+      - type: git
+        style: powerline
+        powerline_symbol: 
+        foreground: p:black
+        background: p:yellow
+        properties:
+          fetch_status: true
+          fetch_upstream_icon: true
+        template: " {{ .HEAD }}{{if .Working.Changed }} 󰛌 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} 󰐗 {{ .Staging.String }}{{ end }} "
+
+      - type: node
+        style: powerline
+        powerline_symbol: 
+        foreground: p:black
+        background: p:green
+        template: "  {{ .Full }} "
+
+      - type: python
+        style: powerline
+        powerline_symbol: 
+        foreground: p:black
+        background: p:cyan
+        template: " 󰌠 {{ .Full }} "
+
+      - type: executiontime
+        style: powerline
+        powerline_symbol: 
+        foreground: p:white
+        background: p:gray
+        properties:
+          threshold: 500
+        template: " 󱦟 {{ .FormattedMs }} "
+
+  - type: prompt
+    alignment: right
+    segments:
+      - type: status
+        style: diamond
+        leading_diamond: "<transparent,background></>"
+        trailing_diamond: "─╮"
+        foreground: p:white
+        background: p:red
+        properties:
+          always_enabled: true
+        template: "{{ if gt .Code 0 }} ✗ {{ .Code }} {{ end }}"
+
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        style: plain
+        foreground: p:blue
+        template: "╰─❯ "
+
+palette:
+  black: "#1a1b26"
+  white: "#c0caf5"
+  blue: "#7aa2f7"
+  yellow: "#e0af68"
+  green: "#9ece6a"
+  cyan: "#7dcfff"
+  red: "#f7768e"
+  gray: "#414868"
+
+transient_prompt:
+  foreground: p:blue
+  template: "╰─❯ "

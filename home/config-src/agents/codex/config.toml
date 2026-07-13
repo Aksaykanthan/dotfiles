@@ -1,0 +1,28 @@
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
+service_tier = "default"
+
+[marketplaces.posthog]
+source_type = "git"
+source = "https://github.com/PostHog/ai-plugin.git"
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"

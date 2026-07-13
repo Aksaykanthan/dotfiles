@@ -1,0 +1,14 @@
+{
+  "theme": "dark",
+  "effortLevel": "medium",
+  "enabledPlugins": {
+    "cloudflare@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "posthog@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
+  },
+  "env": {
+    "AGAM_USER_ENTITY": "Ak"
+  }
+}

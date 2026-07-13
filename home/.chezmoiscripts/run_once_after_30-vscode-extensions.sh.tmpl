@@ -1,0 +1,23 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+BIN=""
+for candidate in code-insiders code; do
+  if command -v "$candidate" >/dev/null 2>&1; then
+    BIN="$candidate"
+    break
+  fi
+done
+
+if [ -z "$BIN" ]; then
+  echo "==> VS Code CLI not on PATH yet, skipping extension install (run scripts/install-vscode-extensions.sh later)"
+  exit 0
+fi
+
+echo "==> Installing VS Code extensions via $BIN"
+while IFS= read -r ext; do
+  [ -z "$ext" ] && continue
+  "$BIN" --install-extension "$ext" --force || true
+done < "{{ .chezmoi.sourceDir }}/config-src/editors/vscode/extensions.txt"
+{{ end -}}

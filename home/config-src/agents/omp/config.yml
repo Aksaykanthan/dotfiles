@@ -1,0 +1,13 @@
+setupVersion: 1
+modelRoles: 
+  default: anthropic/claude-sonnet-5:medium
+  plan: anthropic/claude-mythos-5:medium
+  slow: anthropic/claude-haiku-4-5:medium
+  smol: anthropic/claude-sonnet-5:medium
+  designer: openai-codex/gpt-5.5:medium
+github: 
+  enabled: true
+defaultThinkingLevel: medium
+dev: 
+  autoqa: 
+    consent: granted

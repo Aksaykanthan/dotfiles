@@ -1,0 +1,28 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# macos "system settings" layer — safe, idempotent `defaults write` calls only.
+# Anything that needs a display UUID (e.g. the Displays > "More Space" scaled
+# resolution) or Admin/root access (Touch ID for sudo) is intentionally left
+# out of this auto-run script; see scripts/macos-touch-id-sudo.sh and the
+# README "Manual steps" section instead.
+set -euo pipefail
+
+echo "==> Trackpad: tap to click"
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+echo "==> Appearance: Dark, tinted dark icons/widgets"
+defaults write -g AppleInterfaceStyle -string "Dark"
+defaults write -g AppleInterfaceStyleSwitchesAutomatically -bool false
+defaults write -g AppleIconAppearanceTheme -string "TintedDark"
+
+echo "==> Wallpapers folder"
+mkdir -p "$HOME/Pictures/Wallpapers"
+
+for app in cfprefsd Dock Finder SystemUIServer; do
+  killall "$app" >/dev/null 2>&1 || true
+done
+
+echo "==> Some appearance changes need logout/login to fully apply."
+{{ end -}}

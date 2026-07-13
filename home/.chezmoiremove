@@ -1,0 +1,5 @@
+# Powerlevel10k is replaced by oh-my-posh (see config-src/shell/oh-my-posh.yaml).
+# chezmoi apply will offer to remove these on machines that still have them.
+.p10k.zsh
+.cache/p10k-instant-prompt-*.zsh
+.cache/p10k-*.zsh
