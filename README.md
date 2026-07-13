@@ -34,22 +34,18 @@ home/
 
 ## Personal settings
 
-Edit `home/.chezmoidata.yaml` for settings that differ by person or machine:
+`home/.chezmoidata.yaml` is the commented catalog for personal and
+machine-specific, non-secret values: identity, GitHub, Git, shell, editors,
+terminal, Homebrew, macOS, CLI tools, languages, AI tools, and common paths.
 
-```yaml
-git:
-  name: Your Name
-  email: you@example.com
-github:
-  username: your-github-name
-shell:
-  editor: zed
-  terminal: ghostty
+```sh
+zed "$HOME/development/dotfiles/home/.chezmoidata.yaml"
+chezmoi apply ~/.gitconfig
 ```
 
-Git reads the name and email from this file when `chezmoi apply` generates
-`~/.gitconfig`. Do not store tokens, passwords, API keys, or private keys in
-this repository.
+Git name and email are rendered into `~/.gitconfig` today; all other values
+are ready for future chezmoi templates. Never store tokens, passwords, API
+keys, or private keys in this repository.
 
 ## Setup
 

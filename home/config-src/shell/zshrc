@@ -85,7 +85,6 @@ alias ls='eza --long --group --group-directories-first --icons --header --time-s
 alias vim='nvim'
 alias c='clear'
 alias bi='brew install '
-alias code='code-insiders'
 alias ..="cd .."
 alias ...="cd ../.."
 alias l="yazi"
@@ -98,6 +97,11 @@ alias k='k9s'
 export HOMEBREW_NO_AUTO_UPDATE="1"
 export TERM=xterm-256color
 export CHROME_EXECUTABLE="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
+
+# Editor CLIs bundled with the installed applications. Keep these before the
+# rest of PATH so `code` and `zed` work in every interactive shell.
+[ -d "/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin" ] && export PATH="/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin:$PATH"
+[ -d "/Applications/Zed.app/Contents/MacOS" ] && export PATH="/Applications/Zed.app/Contents/MacOS:$PATH"
 
 export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
 export PATH="$HOME/Library/pnpm:$PATH"

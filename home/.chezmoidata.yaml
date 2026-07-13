@@ -1,14 +1,101 @@
-# Personal, non-secret values available to chezmoi templates.
-# Edit this file before applying these dotfiles to another machine.
-# Never put tokens, passwords, private keys, or API keys here.
+# Personal, non-secret settings available to chezmoi templates.
+#
+# This file is committed publicly. Never add passwords, access tokens, API keys,
+# private keys, recovery codes, SSH keys, or credentials. Keep those in a
+# password manager or a separate, ignored local data file.
+#
+# The Git name and email below are used to render ~/.gitconfig. The remaining
+# settings are a documented customization catalog for future templates and
+# machine-specific configuration; adjust values to match a new machine.
 
-git:
-  name: Aksay Kanthan
+identity:
+  full_name: Aksay Kanthan
   email: aksaykanthan@gmail.com
+  timezone: Asia/Colombo
+  locale: en_LK
 
 github:
   username: Aksaykanthan
+  host: github.com
+  protocol: https
+  default_branch: main
+
+git:
+  # Used by home/dot_gitconfig.tmpl.
+  name: Aksay Kanthan
+  email: aksaykanthan@gmail.com
+  pull_rebase: true
+  default_branch: main
+  # Leave empty unless using commit signing. A public signing-key ID is safe;
+  # never put the private key itself in this file.
+  signing_key: ""
+  sign_commits: false
 
 shell:
+  # Editor commands used by interactive tools and future shell templates.
   editor: zed
+  visual: zed
+  pager: less
   terminal: ghostty
+  prompt: oh-my-posh
+  prompt_theme: minimal
+  history_size: 50000
+  save_history: 50000
+
+editors:
+  default: zed
+  nvim:
+    enabled: true
+    config_dir: ~/.config/nvim
+    distribution: LazyVim
+  zed:
+    enabled: true
+    app_path: /Applications/Zed.app
+    command: zed
+  vscode:
+    enabled: true
+    edition: insiders
+    app_path: /Applications/Visual Studio Code - Insiders.app
+    command: code
+
+terminal:
+  app: ghostty
+  font_family: JetBrainsMono Nerd Font
+  font_size: 13
+  theme: TokyoNight Night
+  opacity: 0.92
+
+homebrew:
+  prefix: /opt/homebrew
+  install_gui_apps: true
+  auto_update: false
+
+macos:
+  appearance: dark
+  tap_to_click: true
+  wallpaper_dir: ~/Pictures/Wallpapers
+  use_touch_id_for_sudo: true
+
+cli:
+  preferred_file_manager: yazi
+  preferred_monitor: btop
+  kubernetes_dashboard: k9s
+  package_manager: brew
+
+languages:
+  node_manager: bun
+  python_manager: uv
+  go_enabled: true
+  rust_enabled: true
+
+ai:
+  assistant: codex
+  coding_model: gpt-5.6-terra
+  claude_enabled: true
+  oh_my_pi_enabled: true
+
+paths:
+  projects: ~/development
+  downloads: ~/Downloads
+  screenshots: ~/Pictures/Screenshots
+  wallpapers: ~/Pictures/Wallpapers
