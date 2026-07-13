@@ -1,8 +1,13 @@
+{{- $ghHosts := fromYaml (include "config-src/cli/gh/hosts.yml") -}}
+{{- $github := index $ghHosts .github.host -}}
 [user]
 	name = {{ .git.name | quote }}
 	email = {{ .git.email | quote }}
 [core]
 	excludesfile = "{{ .chezmoi.homeDir }}/.config/git/ignore"
+[github]
+	username = {{ index $github "user" | quote }}
+	protocol = {{ index $github "git_protocol" | quote }}
 [pull]
 	rebase = true
 [alias]

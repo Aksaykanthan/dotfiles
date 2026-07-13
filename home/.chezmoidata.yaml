@@ -15,9 +15,9 @@ identity:
   locale: en_LK
 
 github:
-  username: Aksaykanthan
+  # Username and Git protocol come from config-src/cli/gh/hosts.yml, which is
+  # the source of truth maintained by `gh auth login`.
   host: github.com
-  protocol: https
   default_branch: main
 
 git:

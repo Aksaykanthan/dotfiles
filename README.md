@@ -43,9 +43,10 @@ zed "$HOME/development/dotfiles/home/.chezmoidata.yaml"
 chezmoi apply ~/.gitconfig
 ```
 
-Git name and email are rendered into `~/.gitconfig` today; all other values
-are ready for future chezmoi templates. Never store tokens, passwords, API
-keys, or private keys in this repository.
+Git name and email are rendered into `~/.gitconfig`. Its GitHub username and
+protocol are derived from `config-src/cli/gh/hosts.yml`, the config maintained
+by `gh auth login`. Never store tokens, passwords, API keys, or private keys
+in this repository.
 
 For a path inside a template, use `{{ .chezmoi.homeDir }}` or a value from
 `.chezmoidata.yaml`; never hardcode `/Users/<name>`. The Codex configuration
