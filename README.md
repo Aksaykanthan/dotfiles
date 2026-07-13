@@ -47,6 +47,10 @@ Git name and email are rendered into `~/.gitconfig` today; all other values
 are ready for future chezmoi templates. Never store tokens, passwords, API
 keys, or private keys in this repository.
 
+For a path inside a template, use `{{ .chezmoi.homeDir }}` or a value from
+`.chezmoidata.yaml`; never hardcode `/Users/<name>`. The Codex configuration
+uses this pattern and is rendered by chezmoi rather than symlinked.
+
 ## Setup
 
 ```sh
