@@ -35,9 +35,11 @@ do
     zinit light $plugin
 done
 
-# oh-my-zsh plugins
+# oh-my-zsh snippets: aliases + completions for git, sudo, docker, kubectl
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
+zinit snippet OMZP::docker
+zinit snippet OMZP::kubectl
 
 # zoxide + fzf (lazy loaded)
 zinit ice wait'1' lucid atload"eval \$(zoxide init --cmd cd zsh)"
@@ -84,30 +86,30 @@ alias vim='nvim'
 alias c='clear'
 alias bi='brew install '
 alias code='code-insiders'
-alias speedup="wg-quick up ~/wg0.conf"
-alias speeddown="wg-quick down ~/wg0.conf"
-alias sr="speeddown; speedup"
 alias ..="cd .."
 alias ...="cd ../.."
 alias l="yazi"
-alias vnc="bash ~/vnc.sh"
+alias k='k9s'
+[ -f "$HOME/vnc.sh" ] && alias vnc="bash $HOME/vnc.sh"
 
 # ------------------------------------------
-# Environment Variables & Lazy Loading
+# Environment Variables
 # ------------------------------------------
 export HOMEBREW_NO_AUTO_UPDATE="1"
 export TERM=xterm-256color
 export CHROME_EXECUTABLE="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
 
-# ENVIRONMENT PATH
-export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
 export PATH="$HOME/Library/pnpm:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
-# React Native
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+# React Native / Android
+export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
+
+# agam
+[ -d "$HOME/coding/agam/.venv/bin" ] && export PATH="$HOME/coding/agam/.venv/bin:$PATH"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -124,36 +126,27 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export LDFLAGS="-L/opt/homebrew/opt/poppler-qt5/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/poppler-qt5/include"
-export PATH="/opt/homebrew/opt/poppler-qt5/bin:$PATH"
-
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# ngrok completions
-if command -v ngrok &>/dev/null; then
-  eval "$(ngrok completion)"
-fi
-
-export PATH="$HOME/.local/bin:$PATH"
-
+# bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# omp (this harness's CLI)
 if command -v omp >/dev/null 2>&1; then
   eval "$(omp completions zsh)"
 fi
 
-# agam
-export PATH="$HOME/coding/agam/.venv/bin:$PATH"
+# ngrok
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
 
-# OpenClaw Completion
+# OpenClaw
 [ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"

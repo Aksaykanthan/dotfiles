@@ -1,0 +1,7 @@
+k9s:
+  liveViewAutoRefresh: true
+  ui:
+    skin: transparent
+    enableMouse: false
+    logoless: false
+  readOnly: false

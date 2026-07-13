@@ -1,0 +1,9 @@
+# External sources that chezmoi clones/updates directly (not stored inline
+# in this repo). Kept in sync on `chezmoi apply` / `chezmoi update` at the
+# given refreshPeriod.
+".config/nvim":
+  type: "git-repo"
+  url: "https://github.com/LazyVim/starter.git"
+  refreshPeriod: "168h"
+  clone:
+    args: ["--depth", "1"]

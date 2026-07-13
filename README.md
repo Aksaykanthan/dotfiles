@@ -18,17 +18,26 @@ dotfiles/                    repo root — NOT mirrored into $HOME (see .chezmoi
 └── home/                    chezmoi source root, mirrors $HOME
     ├── .chezmoiignore       keeps config-src/ out of the deployed tree
     ├── .chezmoiremove       retires powerlevel10k leftovers on `apply`
+    ├── .chezmoiexternal.yaml  nvim = a real `git-repo` clone of LazyVim/starter
     ├── .chezmoiscripts/     ordered run_once_ hooks (install layer automation)
     ├── config-src/          the real, editable files — organised by layer
     │   ├── shell/           zsh, oh-my-posh
     │   ├── git/
     │   ├── terminal/ghostty/
-    │   ├── editors/         nvim (NvChad), zed, vscode
-    │   ├── cli/              btop, gh, gh-dash
+    │   ├── editors/         zed, vscode (nvim lives outside config-src, see below)
+    │   ├── cli/              btop, gh, gh-dash, k9s
     │   ├── agents/           claude, codex, omp (this harness)
     │   └── macos/            wakeup/sleep scripts, GUI-app defaults() snapshots
     └── symlink_* / dot_*/…  thin stubs chezmoi materialises into $HOME
 ```
+
+`~/.config/nvim` is the one exception to the symlink-into-config-src pattern:
+it's a real `git clone` of `LazyVim/starter` (`.chezmoiexternal.yaml`, type
+`git-repo`), refreshed every 168h by `chezmoi apply`/`chezmoi update` — exactly
+`git clone https://github.com/LazyVim/starter ~/.config/nvim`, just kept in
+sync automatically. Customize it in place; it's its own git working tree, so
+commit your changes there directly (fork the starter repo first if you want
+`git pull` to bring in only upstream changes cleanly).
 
 **Every managed dotfile in `$HOME` is a real symlink into `config-src/`.**
 `chezmoi apply` only ever (re)creates the symlink; edit the file directly
@@ -50,14 +59,17 @@ every symlink stub.
 2. **Brewfile** (`run_once_before_10…`) — `brew bundle`: CLI tools, language
    toolchains (python, go, rust, node, bun, uv, ansible), fonts, GUI app
    casks.
-3. **Dotfiles** — chezmoi's normal file/symlink pass. Shell (`.zshrc` /
-   `.zprofile` / `.zshenv` + oh-my-posh), git, ghostty, nvim, zed, VS Code
-   settings, btop, gh/gh-dash, and the Claude / Codex / omp agent configs.
+3. **Dotfiles** — chezmoi's normal file/symlink pass, plus the `nvim`
+   `git-repo` external. Shell (`.zshrc` / `.zprofile` / `.zshenv` +
+   oh-my-posh), git, ghostty, zed, VS Code settings, btop, gh/gh-dash, k9s
+   (transparent skin), and the Claude / Codex / omp agent configs.
 4. **Permissions** (`run_once_after_20…`) — `chmod +x` on `~/.wakeup` /
    `~/.sleep`, starts the `sleepwatcher` brew service that runs them.
-5. **VS Code extensions** (`run_once_after_30…`) — installs everything in
+5. **nvim plugin sync** (`run_once_after_25…`) — headless `Lazy! sync` so
+   the first real `nvim` launch isn't slow/interactive.
+6. **VS Code extensions** (`run_once_after_30…`) — installs everything in
    `config-src/editors/vscode/extensions.txt`.
-6. **macOS defaults** (`run_once_after_40…`) — tap-to-click, dark appearance
+7. **macOS defaults** (`run_once_after_40…`) — tap-to-click, dark appearance
    with tinted-dark icons/widgets, creates `~/Pictures/Wallpapers`.
 
 `run_once_*` scripts only run once per machine (chezmoi tracks a hash of
@@ -103,3 +115,48 @@ chezmoi apply --exclude=scripts   # dotfiles only, skip install/system scripts
 chezmoi re-add                    # pull hand-edited config-src/ changes back
 chezmoi cd && git add -A && git commit   # commit from the source dir
 ```
+
+## Verifying the setup works
+
+Fast, non-destructive checks, in order:
+
+```sh
+# 1. Source tree is internally consistent (no bad targets, unresolved
+#    templates, syntax errors) — catches most authoring mistakes.
+chezmoi verify
+chezmoi doctor            # look for any `error`/`fail` rows
+
+# 2. See exactly what would change before touching anything.
+chezmoi diff
+
+# 3. Apply just the dotfile/symlink layer (safe, no installs).
+chezmoi apply --exclude=scripts
+chezmoi status             # should print nothing once applied
+
+# 4. Confirm the symlinks are real and point where they should.
+readlink ~/.zshrc ~/.gitconfig ~/.config/oh-my-posh/config.yaml
+readlink "$HOME/Library/Application Support/k9s/config.yaml"
+
+# 5. Shell loads without errors and the new bits are wired up.
+zsh -n ~/.zshrc                       # syntax check only, no side effects
+zsh -i -c 'exit'                      # full interactive load; watch for errors
+zsh -i -c 'type k9s docker kubectl'   # docker/kubectl snippets + k9s alias
+
+# 6. nvim: confirm the LazyVim clone landed and plugins install cleanly.
+git -C ~/.config/nvim remote -v       # should be LazyVim/starter
+nvim --headless "+Lazy! sync" +qa && echo nvim-ok
+
+# 7. k9s: confirm it parses the config/skin (no cluster needed).
+k9s info                              # should list config.yaml + skins with no parse errors
+
+# 8. git aliases resolve.
+git lg -3   # or: git co, git st, git undo, git sync
+
+# 9. Run the install-layer scripts only when you actually want brew/vscode/
+#    macOS-defaults changes applied (they're the parts that touch more than
+#    dotfiles):
+chezmoi apply
+```
+
+If anything looks wrong, `chezmoi diff` again before reapplying — it always
+shows the exact change, never applies silently.

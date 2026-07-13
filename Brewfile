@@ -19,6 +19,7 @@ brew "node@24"
 brew "openfortivpn"
 brew "ripgrep"
 brew "sleepwatcher"      # runs ~/.wakeup and ~/.sleep, see macos/scripts layer
+brew "k9s"
 brew "tesseract"
 brew "tree"
 brew "whisper-cpp"

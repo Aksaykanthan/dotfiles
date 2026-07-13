@@ -3,3 +3,15 @@
 	email = aksaykanthan@gmail.com
 [pull]
 	rebase = true
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status -sb
+	unstage = restore --staged
+	last = log -1 HEAD --stat
+	amend = commit --amend --no-edit
+	undo = reset --soft HEAD~1
+	lg = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %C(green)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	fixup = "!f() { git commit --fixup=$1; }; f"
+	sync = "!f() { git fetch --all --prune && git rebase origin/$(git rev-parse --abbrev-ref HEAD); }; f"
