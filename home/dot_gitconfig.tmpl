@@ -1,6 +1,8 @@
 [user]
 	name = {{ .git.name | quote }}
 	email = {{ .git.email | quote }}
+[core]
+	excludesfile = "{{ .chezmoi.homeDir }}/.config/git/ignore"
 [pull]
 	rebase = true
 [alias]
