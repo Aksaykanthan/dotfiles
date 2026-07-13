@@ -1,0 +1,14 @@
+# Personal, non-secret values available to chezmoi templates.
+# Edit this file before applying these dotfiles to another machine.
+# Never put tokens, passwords, private keys, or API keys here.
+
+git:
+  name: Aksay Kanthan
+  email: aksaykanthan@gmail.com
+
+github:
+  username: Aksaykanthan
+
+shell:
+  editor: zed
+  terminal: ghostty

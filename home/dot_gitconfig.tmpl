@@ -1,6 +1,6 @@
 [user]
-	name = Aksay Kanthan
-	email = aksaykanthan@gmail.com
+	name = {{ .git.name | quote }}
+	email = {{ .git.email | quote }}
 [pull]
 	rebase = true
 [alias]

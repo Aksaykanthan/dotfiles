@@ -28,8 +28,28 @@ scripts/                 Manual maintenance scripts
 home/
   .chezmoiscripts/       Ordered one-time setup hooks
   .chezmoiexternal.yaml  LazyVim Git clone definition
+  .chezmoidata.yaml       Personal, non-secret template settings
   config-src/            Actual configuration files
 ```
+
+## Personal settings
+
+Edit `home/.chezmoidata.yaml` for settings that differ by person or machine:
+
+```yaml
+git:
+  name: Your Name
+  email: you@example.com
+github:
+  username: your-github-name
+shell:
+  editor: zed
+  terminal: ghostty
+```
+
+Git reads the name and email from this file when `chezmoi apply` generates
+`~/.gitconfig`. Do not store tokens, passwords, API keys, or private keys in
+this repository.
 
 ## Setup
 
