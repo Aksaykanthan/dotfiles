@@ -79,8 +79,10 @@ set -g fish_pager_color_selected_background --background=32344a
 
 # --------------------------------------------------------------
 # Greeting: swap the stock "Welcome to fish ... Type help ..."
-# for a compact status line plus a rotating tip pulled from the
-# tools this config already wires up.
+# for macfetch's system summary (see config-src/cli/macfetch for
+# the curated segment list) plus a rotating tip pulled from the
+# tools this config already wires up. Falls back to a compact
+# status line if macfetch isn't installed yet.
 # --------------------------------------------------------------
 function fish_greeting
     set -l tips \
@@ -94,24 +96,28 @@ function fish_greeting
         "vi mode: Alt+s prepends sudo to the current/last command" \
         "yazi: 'l' opens a full-screen file manager right here"
 
-    set -l uptime_str (uptime | string replace -r '.*up ' '' \
-        | string replace -r ',?\s*\d+ users?.*' '' \
-        | string replace -ra '\s+' ' ' | string trim)
-    set -l os_version (sw_vers -productVersion 2>/dev/null)
+    if type -q macfetch
+        macfetch
+    else
+        set -l uptime_str (uptime | string replace -r '.*up ' '' \
+            | string replace -r ',?\s*\d+ users?.*' '' \
+            | string replace -ra '\s+' ' ' | string trim)
+        set -l os_version (sw_vers -productVersion 2>/dev/null)
 
-    set_color --bold 7aa2f7
-    echo -n (whoami)@(hostname -s)
-    set_color 565f89
-    echo -n '  ·  '(date '+%a %d %b, %H:%M')
-    set_color normal
-    echo
+        set_color --bold 7aa2f7
+        echo -n (whoami)@(hostname -s)
+        set_color 565f89
+        echo -n '  ·  '(date '+%a %d %b, %H:%M')
+        set_color normal
+        echo
 
-    set_color 9ece6a
-    echo -n "macOS $os_version"
-    set_color 565f89
-    echo -n "  ·  fish $version  ·  up $uptime_str"
-    set_color normal
-    echo
+        set_color 9ece6a
+        echo -n "macOS $os_version"
+        set_color 565f89
+        echo -n "  ·  fish $version  ·  up $uptime_str"
+        set_color normal
+        echo
+    end
 
     set_color bb9af7
     echo -n '› '
@@ -173,25 +179,32 @@ bind -M insert \cp history-prefix-search-backward
 bind -M insert \cn history-prefix-search-forward
 
 # --------------------------------------------------------------
-# Aliases
-#   git/docker/kubectl shell aliases dropped: git aliases live
-#   in ~/.gitconfig (co, br, ci, st, lg, ...); docker/kubectl
+# Abbreviations
+#   `abbr` (not `alias`) is the fish-recommended way to do this:
+#   the full command is expanded into the commandline on space/
+#   enter, so history and `type` show real commands, not an
+#   opaque wrapper function. Trade-off: unlike alias, abbreviations
+#   only expand for text typed at the prompt, never inside scripts
+#   or other functions - fine here, nothing in this repo calls
+#   these names expecting alias-style behavior.
+#   git/docker/kubectl abbreviations dropped: git aliases live in
+#   ~/.gitconfig (co, br, ci, st, lg, ...); docker/kubectl
 #   completions come from carapace above.
 # --------------------------------------------------------------
-alias ls 'eza --long --group --group-directories-first --icons --header --time-style long-iso'
+abbr -a ls 'eza --long --group --group-directories-first --icons --header --time-style long-iso'
 if type -q bat
-    alias cat bat
+    abbr -a cat bat
 end
-alias vim nvim
-alias c clear
-alias bi 'brew install'
-alias .. 'cd ..'
-alias ... 'cd ../..'
-alias l yazi
-alias k k9s
-alias zj 'zellij attach -c main'
+abbr -a vim nvim
+abbr -a c clear
+abbr -a bi 'brew install'
+abbr -a .. 'cd ..'
+abbr -a ... 'cd ../..'
+abbr -a l yazi
+abbr -a k k9s
+abbr -a zj 'zellij attach -c main'
 test -f "$HOME/vnc.sh"
-and alias vnc "bash $HOME/vnc.sh"
+and abbr -a vnc "bash $HOME/vnc.sh"
 
 # --------------------------------------------------------------
 # Environment variables
@@ -200,7 +213,7 @@ set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx TERM xterm-256color
 set -gx CHROME_EXECUTABLE "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
 
-# bat - colorized `cat` (aliased above) and manpager
+# bat - colorized `cat` (abbreviated above) and manpager
 if type -q bat
     set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
     set -gx MANROFFOPT '-c'

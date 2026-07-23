@@ -4,10 +4,11 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
 
 ## What's managed
 
-- Shell: fish with vi key bindings and a minimal, no-background oh-my-posh prompt
+- Shell: fish with vi key bindings, a minimal no-background oh-my-posh
+  prompt, and a macfetch system summary at login
 - Terminal: Ghostty, with zellij as the multiplexer inside it
 - Editors: LazyVim, Zed, VS Code settings and extensions
-- CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), zoxide, ripgrep, bat
+- CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), zoxide, ripgrep, bat, macfetch
 - AI tools: Claude, Codex, Oh My Pi
 - macOS: `.wakeup`, `.sleep`, selected app preferences, and safe defaults
 - Packages and apps: `Brewfile`

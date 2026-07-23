@@ -1,0 +1,23 @@
+# Macfetch — https://github.com/gantoreno/macfetch
+# Curated segment list: drops the always-identical `resolution`/`de`/`wm`
+# rows (every Mac reports Aqua/Quartz Compositor) to match the rest of this
+# config's minimal, no-clutter style. Run `macfetch` after editing to preview.
+
+[general]
+segments = [
+    "machine",
+    "separator",
+    "os",
+    "host",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "terminal",
+    "cpu",
+    "gpu",
+    "battery",
+    "memory",
+    "empty",
+    "dark_colors",
+]

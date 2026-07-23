@@ -4,6 +4,9 @@
 # Regenerate the installed-package section with: brew bundle dump --force
 # ---------------------------------------------------------------------------
 
+# ---- Taps ----
+tap "gantoreno/macfetch"  # third-party tap for the macfetch formula below
+
 # ---- CLI tools (formerly `brew leaves`) ----
 brew "ansible"
 brew "atuin"             # shell history search (Ctrl+R, Up arrow)
@@ -17,6 +20,7 @@ brew "ffmpeg"
 brew "fzf"
 brew "gh"
 brew "gh-dash"
+brew "macfetch"          # neofetch-style system summary, shown at login (see fish_greeting)
 brew "neovim"
 brew "node@24"
 brew "openfortivpn"
