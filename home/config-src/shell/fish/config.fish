@@ -144,11 +144,17 @@ if type -q zoxide
 end
 
 # --------------------------------------------------------------
-# fzf key bindings (Ctrl+T paste path, Alt+C cd, ** completion).
-# Ctrl+R is left to atuin, sourced after so its binding wins.
+# fzf: Ctrl+T paste path, Alt+C cd, ** completion, and Tab itself
+# rebound to fzf's own fzf_complete widget (normally shift-tab-only)
+# so any command's completion - `ls <Tab>`, `git checkout <Tab>`,
+# `brew install <Tab>`, ... - opens the fuzzy picker instead of
+# fish's plain completion pager. Ctrl+R is left to atuin, sourced
+# after so its binding wins.
 # --------------------------------------------------------------
 if type -q fzf
     fzf --fish | source
+    bind \t fzf_complete
+    bind -M insert \t fzf_complete
 end
 
 # --------------------------------------------------------------
