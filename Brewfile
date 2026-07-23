@@ -6,8 +6,11 @@
 
 # ---- CLI tools (formerly `brew leaves`) ----
 brew "ansible"
+brew "atuin"             # shell history search (Ctrl+R, Up arrow)
+brew "bat"               # cat with syntax highlighting, used as the manpager below
 brew "blueutil"          # used by ~/.wakeup and ~/.sleep
 brew "btop"
+brew "carapace"          # universal multi-shell completion generator
 brew "cloudflared"
 brew "eza"
 brew "ffmpeg"
@@ -20,13 +23,16 @@ brew "openfortivpn"
 brew "ripgrep"
 brew "sleepwatcher"      # runs ~/.wakeup and ~/.sleep, see macos/scripts layer
 brew "k9s"
+brew "television"        # `tv` — general-purpose fuzzy finder TUI
 brew "tesseract"
 brew "tree"
 brew "whisper-cpp"
 brew "yazi"
+brew "zellij"            # terminal multiplexer
 brew "zoxide"
 
 # ---- Shell / prompt ----
+brew "fish"
 brew "oh-my-posh"        # replaces powerlevel10k
 
 # ---- Language toolchains ----

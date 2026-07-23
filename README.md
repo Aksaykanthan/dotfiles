@@ -4,16 +4,16 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
 
 ## What's managed
 
-- Shell: zsh and a minimal, no-background oh-my-posh prompt
-- Terminal: Ghostty
+- Shell: fish with vi key bindings and a minimal, no-background oh-my-posh prompt
+- Terminal: Ghostty, with zellij as the multiplexer inside it
 - Editors: LazyVim, Zed, VS Code settings and extensions
-- CLI: git, gh, gh-dash, btop, k9s
+- CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), zoxide, ripgrep, bat
 - AI tools: Claude, Codex, Oh My Pi
 - macOS: `.wakeup`, `.sleep`, selected app preferences, and safe defaults
 - Packages and apps: `Brewfile`
 
 Most managed configuration files are symlinks into
-`home/config-src/`. Edit either the live file (for example `~/.zshrc`) or its
+`home/config-src/`. Edit either the live file (for example `~/.config/fish/config.fish`) or its
 source file; the change is live immediately.
 
 `~/.config/nvim` is different: chezmoi clones
@@ -102,8 +102,8 @@ chezmoi verify
 chezmoi status
 
 # Shell and prompt.
-zsh -n ~/.zshrc
-zsh -i -c 'type oh-my-posh'
+fish -n ~/.config/fish/config.fish
+fish -c 'type oh-my-posh'
 oh-my-posh print primary --config ~/.config/oh-my-posh/config.yaml
 
 # Editors.
@@ -114,6 +114,9 @@ nvim --headless "+Lazy! sync" +qa
 # Managed CLI configuration.
 k9s info
 git lg -3
+
+# Terminal multiplexer.
+zellij setup --check
 ```
 
 ## Manual actions
@@ -121,6 +124,9 @@ git lg -3
 ```sh
 # Enable Touch ID for sudo. Requires an administrator password.
 scripts/macos-touch-id-sudo.sh
+
+# Make fish the default login shell. Requires sudo and the account password.
+scripts/set-default-shell-fish.sh
 
 # Save or restore Raycast, Shottr, Amphetamine, boringNotch, and IINA preferences.
 scripts/backup-gui-prefs.sh

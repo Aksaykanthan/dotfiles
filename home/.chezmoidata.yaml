@@ -33,14 +33,17 @@ git:
 
 shell:
   # Editor commands used by interactive tools and future shell templates.
+  name: fish
+  vi_mode: true
+  multiplexer: zellij
   editor: zed
   visual: zed
   pager: less
   terminal: ghostty
   prompt: oh-my-posh
   prompt_theme: minimal
-  history_size: 50000
-  save_history: 50000
+  # fish has no user-configurable history size; atuin owns interactive
+  # search over it instead.
 
 editors:
   default: zed
