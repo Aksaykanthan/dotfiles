@@ -213,12 +213,16 @@ fish_add_path -P "$HOME/.cargo/bin"
 test -f "$HOME/.orbstack/shell/init2.fish"
 and source "$HOME/.orbstack/shell/init2.fish"
 
-# Editor CLIs bundled with the installed applications. Prepended
-# first so `code` and `zed` resolve ahead of the rest of PATH.
+# Editor CLIs bundled with the installed applications, so `code` and
+# `zed` are on PATH. VS Code's bin dir is prepended (it ships no other
+# CLIs that would shadow something more important); Zed's is appended
+# instead of prepended because Contents/MacOS also bundles its own
+# `git`, and prepending it would shadow the real git (breaking
+# `git push`/`fetch` with a missing git-remote-https error).
 # fish_add_path silently skips paths that don't exist, so no
 # extra existence guard is needed here.
 fish_add_path -P "/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin"
-fish_add_path -P "/Applications/Zed.app/Contents/MacOS"
+fish_add_path -P -a "/Applications/Zed.app/Contents/MacOS"
 
 fish_add_path -P "$HOME/.antigravity-ide/antigravity-ide/bin"
 
