@@ -83,15 +83,24 @@ set -g fish_pager_color_selected_background --background=32344a
 # the curated segment list) plus a rotating tip pulled from the
 # tools this config already wires up. Falls back to a compact
 # status line if macfetch isn't installed yet.
+#
+# No fish_greeting function - config.fish already only runs once
+# per shell start, same as fish_greeting would, so a function here
+# is pure indirection. `fish_greeting ''` suppresses the stock
+# text (fish's own fish_greeting checks it's non-empty before
+# printing); `status is-interactive` keeps this block from running
+# for scripts and other non-interactive `fish -c ...` invocations.
 # --------------------------------------------------------------
-function fish_greeting
+set -g fish_greeting ''
+
+if status is-interactive
     set -l tips \
         "zoxide: 'cd foo' jumps to any visited dir by frecency" \
         "atuin: Ctrl+R searches synced, cross-machine shell history" \
         "fzf: Ctrl+T pastes a fuzzy-picked path, Alt+C fuzzy-cds" \
         "eza: 'ls' already shows icons, git status, long format" \
         "zellij: 'zj' attaches (or creates) the 'main' session" \
-        "k9s: 'k' opens the Kubernetes dashboard" \
+        "k9s: 'k9' opens the Kubernetes dashboard" \
         "bat: 'cat' and man pages now have syntax highlighting" \
         "vi mode: Alt+s prepends sudo to the current/last command" \
         "yazi: 'l' opens a full-screen file manager right here"
@@ -193,9 +202,10 @@ bind -M insert \cn history-prefix-search-forward
 #   only expand for text typed at the prompt, never inside scripts
 #   or other functions - fine here, nothing in this repo calls
 #   these names expecting alias-style behavior.
-#   git/docker/kubectl abbreviations dropped: git aliases live in
-#   ~/.gitconfig (co, br, ci, st, lg, ...); docker/kubectl
-#   completions come from carapace above.
+#   git aliases also live in ~/.gitconfig (co, br, ci, st, lg, ...);
+#   the git/docker/kubectl snippets below are the shell-level layer
+#   on top - skip typing the command name entirely. carapace (above)
+#   still drives their TAB completion.
 # --------------------------------------------------------------
 abbr -a ls 'eza --long --group --group-directories-first --icons --header --time-style long-iso'
 if type -q bat
@@ -207,10 +217,45 @@ abbr -a bi 'brew install'
 abbr -a .. 'cd ..'
 abbr -a ... 'cd ../..'
 abbr -a l yazi
-abbr -a k k9s
+abbr -a k9 k9s
 abbr -a zj 'zellij attach -c main'
 test -f "$HOME/vnc.sh"
 and abbr -a vnc "bash $HOME/vnc.sh"
+
+# git
+abbr -a gs  'git status -sb'
+abbr -a ga  'git add'
+abbr -a gaa 'git add --all'
+abbr -a gc  'git commit'
+abbr -a gcm 'git commit -m'
+abbr -a gp  'git push'
+abbr -a gpl 'git pull'
+abbr -a gco 'git checkout'
+abbr -a gb  'git branch'
+abbr -a gd  'git diff'
+abbr -a gl  'git lg'
+abbr -a gst 'git stash'
+
+# docker
+if type -q docker
+    abbr -a d    docker
+    abbr -a dc   'docker compose'
+    abbr -a dps  'docker ps'
+    abbr -a dex  'docker exec -it'
+    abbr -a dlog 'docker logs -f'
+end
+
+# kubectl (k9s above got renamed to k9 so bare k is kubectl, the
+# universal convention)
+if type -q kubectl
+    abbr -a k   kubectl
+    abbr -a kgp 'kubectl get pods'
+    abbr -a kgs 'kubectl get svc'
+    abbr -a kdp 'kubectl describe pod'
+    abbr -a kaf 'kubectl apply -f'
+    abbr -a kl  'kubectl logs -f'
+    abbr -a kx  'kubectl exec -it'
+end
 
 # --------------------------------------------------------------
 # Environment variables

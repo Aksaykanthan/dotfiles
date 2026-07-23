@@ -8,11 +8,15 @@ console_title_template: '{{ .Shell }} in {{ .Folder }}'
 # text on your terminal's own background. Palette matches the Tokyo Night
 # theme shared by Ghostty, fish's syntax highlighting, and zellij, so the
 # whole terminal environment reads as one thing.
+#
+# Single left-aligned block only - fish's fish_right_prompt anchors to the
+# END of whatever fish_prompt renders, which for this prompt is the second
+# line (the bare "❯ "), not the first. A right-aligned block here doesn't
+# render next to the path/git line like you'd expect; it renders squeezed
+# onto the same line you type on. Not worth the confusion for a clock.
 palette:
   blue: "#7aa2f7"
-  green: "#9ece6a"
   yellow: "#e0af68"
-  cyan: "#7dcfff"
   red: "#f7768e"
   muted: "#565f89"
 
@@ -35,15 +39,12 @@ blocks:
           fetch_status: true
         template: "{{ .HEAD }}{{ if .Working.Changed }} *{{ end }}{{ if .Staging.Changed }} +{{ end }} "
 
-      - type: node
+      - type: executiontime
         style: plain
-        foreground: p:green
-        template: " {{ .Full }} "
-
-      - type: python
-        style: plain
-        foreground: p:cyan
-        template: " {{ .Full }} "
+        foreground: p:muted
+        properties:
+          threshold: 500
+        template: " {{ .FormattedMs }}"
 
       - type: status
         style: plain
@@ -56,25 +57,6 @@ blocks:
         style: plain
         foreground: p:blue
         template: "\n❯ "
-
-  # Right-aligned: how long the last command took (only above the
-  # threshold) and the clock, both muted so they read as ambient
-  # info, not competing with the left side.
-  - type: prompt
-    alignment: right
-    segments:
-      - type: executiontime
-        style: plain
-        foreground: p:muted
-        properties:
-          threshold: 500
-        template: "{{ .FormattedMs }} "
-
-      - type: time
-        style: plain
-        foreground: p:muted
-        options:
-          time_format: "15:04"
 
 transient_prompt:
   foreground: p:blue

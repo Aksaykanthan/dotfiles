@@ -1,20 +1,13 @@
 // Zellij terminal multiplexer. Theme matches Ghostty's "TokyoNight Night"
-// for a cohesive look between the terminal, the multiplexer, and the
-// fish/oh-my-posh prompt.
+// for a cohesive look between the terminal and the multiplexer inside it.
 
 theme "tokyo-night-dark"
-default_layout "tokyo-night"
+default_layout "compact"
 default_shell "fish"
 
-// No first-run noise.
+// Rounded pane borders + no first-run noise.
 show_startup_tips false
 show_release_notes false
-
-// Pane frames are driven per-tab by the tokyo-night layout's zjstatus bar
-// (hide_frame_for_single_pane) instead of always-on here, per zjstatus's
-// own guidance - otherwise zellij fights the plugin over frame state every
-// render cycle. rounded_corners still applies whenever a frame IS shown.
-pane_frames false
 
 ui {
     pane_frames {
