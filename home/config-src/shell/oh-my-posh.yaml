@@ -5,14 +5,24 @@ console_title_template: '{{ .Shell }} in {{ .Folder }}'
 
 # Minimal theme: plain-style segments, no background swatches anywhere —
 # every segment paints foreground text only, so the prompt is just colored
-# text on your terminal's own background.
+# text on your terminal's own background. Palette matches the Tokyo Night
+# theme shared by Ghostty, fish's syntax highlighting, and zellij, so the
+# whole terminal environment reads as one thing.
+palette:
+  blue: "#7aa2f7"
+  green: "#9ece6a"
+  yellow: "#e0af68"
+  cyan: "#7dcfff"
+  red: "#f7768e"
+  muted: "#565f89"
+
 blocks:
   - type: prompt
     alignment: left
     segments:
       - type: path
         style: plain
-        foreground: "#61AFEF"
+        foreground: p:blue
         properties:
           style: agnoster_short
           max_depth: 3
@@ -20,40 +30,52 @@ blocks:
 
       - type: git
         style: plain
-        foreground: "#E5C07B"
+        foreground: p:yellow
         properties:
           fetch_status: true
         template: "{{ .HEAD }}{{ if .Working.Changed }} *{{ end }}{{ if .Staging.Changed }} +{{ end }} "
 
       - type: node
         style: plain
-        foreground: "#98C379"
+        foreground: p:green
         template: " {{ .Full }} "
 
       - type: python
         style: plain
-        foreground: "#56B6C2"
+        foreground: p:cyan
         template: " {{ .Full }} "
-
-      - type: executiontime
-        style: plain
-        foreground: "#5C6370"
-        properties:
-          threshold: 500
-        template: " {{ .FormattedMs }}"
 
       - type: status
         style: plain
-        foreground: "#E06C75"
+        foreground: p:red
         properties:
           always_enabled: false
         template: " ✗{{ .Code }}"
 
       - type: text
         style: plain
-        foreground: "#61AFEF"
+        foreground: p:blue
         template: "\n❯ "
 
+  # Right-aligned: how long the last command took (only above the
+  # threshold) and the clock, both muted so they read as ambient
+  # info, not competing with the left side.
+  - type: prompt
+    alignment: right
+    segments:
+      - type: executiontime
+        style: plain
+        foreground: p:muted
+        properties:
+          threshold: 500
+        template: "{{ .FormattedMs }} "
+
+      - type: time
+        style: plain
+        foreground: p:muted
+        options:
+          time_format: "15:04"
+
 transient_prompt:
-  foreground: "#61AFEF"
+  foreground: p:blue
   template: "❯ "

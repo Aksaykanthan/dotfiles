@@ -6,7 +6,10 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
 
 - Shell: fish with vi key bindings, a minimal no-background oh-my-posh
   prompt, and a macfetch system summary at login
-- Terminal: Ghostty, with zellij as the multiplexer inside it
+- Terminal: Ghostty (Alt+V for a Vim-style scrollback key table), with
+  zellij as the multiplexer inside it - a custom layout drives a
+  [zjstatus](https://github.com/dj95/zjstatus) tab/status bar (pinned
+  version, fetched and cached by zellij on first launch of that layout)
 - Editors: LazyVim, Zed, VS Code settings and extensions
 - CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), zoxide, ripgrep, bat, macfetch
 - AI tools: Claude, Codex, Oh My Pi

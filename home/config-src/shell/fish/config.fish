@@ -257,7 +257,16 @@ fish_add_path -P -a "$ANDROID_HOME/emulator" "$ANDROID_HOME/platform-tools"
 # agam
 fish_add_path -P "$HOME/coding/agam/.venv/bin"
 
-# conda
+# conda - CONDA_DISABLE_FISH_PROMPT skips conda.fish's fish_prompt/
+# fish_right_prompt wrapping entirely. Without it, conda hijacks both
+# prompt functions, and oh-my-posh's own env-var trick to suppress
+# conda's *bash/zsh* prompt decoration (it sets CONDA_PROMPT_MODIFIER
+# to the literal string "false" as a sentinel those shells check for)
+# gets misread by fish's conda hook, which just echoes the value -
+# hence a literal "false" appearing as the right prompt. oh-my-posh
+# owns the prompt; `conda activate`/`deactivate` env management is
+# unaffected by this flag.
+set -gx CONDA_DISABLE_FISH_PROMPT 1
 if test -f "$HOME/miniconda3/etc/fish/conf.d/conda.fish"
     source "$HOME/miniconda3/etc/fish/conf.d/conda.fish"
 else

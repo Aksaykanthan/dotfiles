@@ -21,3 +21,42 @@ cursor-style = block
 
 # ========== Keybindings ==========
 
+# Vim mode: Alt+V enters a modal key table for scrollback navigation
+# and search, styled after Vim's normal-mode motions. Ghostty has no
+# built-in "vim mode" toggle (as of 1.3) - this composes it from the
+# scroll/search/jump actions it does expose. Escape or q returns to
+# normal terminal input.
+#
+# Not included: visual-mode text selection. Ghostty only exposes
+# "adjust an existing selection" (mouse-started), not "begin a
+# selection from the keyboard cursor" - so a real `v` binding isn't
+# possible yet, and faking one would just be broken.
+keybind = alt+v=activate_key_table:vim
+keybind = vim/escape=deactivate_key_table
+keybind = vim/q=deactivate_key_table
+
+# Line/page scroll: j/k, Ctrl+D/Ctrl+U (half page), Ctrl+F/Ctrl+B (page)
+keybind = vim/j=scroll_page_lines:1
+keybind = vim/k=scroll_page_lines:-1
+keybind = vim/ctrl+d=scroll_page_fractional:0.5
+keybind = vim/ctrl+u=scroll_page_fractional:-0.5
+keybind = vim/ctrl+f=scroll_page_down
+keybind = vim/ctrl+b=scroll_page_up
+
+# Jump to top/bottom of scrollback
+keybind = vim/g=scroll_to_top
+keybind = vim/shift+g=scroll_to_bottom
+
+# `/` searches scrollback; n/N repeat forward/backward
+keybind = vim//=start_search
+keybind = vim/n=navigate_search:next
+keybind = vim/shift+n=navigate_search:previous
+
+# [/] jump to the previous/next shell prompt (requires fish's shell
+# integration, already enabled by Ghostty's default shell detection)
+keybind = vim/[=jump_to_prompt:-1
+keybind = vim/]=jump_to_prompt:1
+
+# y copies the active selection, if any (Vim-style yank)
+keybind = performable:vim/y=copy_to_clipboard
+
