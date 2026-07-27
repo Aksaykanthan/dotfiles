@@ -13,6 +13,12 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
 - AI tools: Claude, Codex, Oh My Pi (`omp`, installed globally via `bun install
   -g @oh-my-pi/pi-coding-agent`; its `config.yml` and MCP server registry
   `mcp.json` are both chezmoi-managed, see below)
+- Token-optimization tools for AI coding agents: `rtk` (CLI output
+  compression, wired into omp as a native hook — see below), `caveman`
+  (terse-output mode, wired into omp as a native hook), `pxpipe` (Anthropic
+  request compression, run as a LaunchAgent proxy omp routes through),
+  Headroom (Claude Code/Codex only, installed manually — no omp
+  integration exists upstream)
 - macOS: `.wakeup`, `.sleep`, selected app preferences, and safe defaults
 - Packages and apps: `Brewfile`
 
@@ -73,6 +79,56 @@ machine-local by construction. Recreate that file by hand on a new machine:
 set -gx OVERLEAF_SESSION "..."
 set -gx OVERLEAF_GIT_TOKEN "..."
 ```
+
+## Token-optimization tools for AI agents
+
+Four tools that reduce the token cost of driving an AI coding agent. All
+four were installed and wired in with the understanding that they sit
+between the agent and the model — they can see and modify prompts, tool
+output, or both. None of them phone home beyond the model API itself
+(verified from each project's own source/docs before installing), but that
+design is inherent to what they do, not a side effect.
+
+**rtk** (`brew "rtk"`) compresses verbose CLI output (git, test runners,
+etc.) before it reaches the agent's context. It ships hooks for several
+agents but has no `omp`/Pi target — its Claude Code hook relies on rewriting
+the tool call in place, which omp's hook API does not expose (`tool_call`
+can only block/allow, never mutate the input; see `hooks.md` in the omp
+docs). `home/config-src/agents/omp/extensions/rtk-rewrite.ts` is the native
+equivalent: it shells out to `rtk rewrite <cmd>` (rtk's own single source of
+truth for the mapping — never duplicated here) and, when a compressed
+equivalent exists, blocks the raw command with the rewrite as the reason, so
+the agent retries with it. Self-correcting, not a silent rewrite.
+
+**caveman** (github.com/JuliusBrussee/caveman) makes the agent respond in
+terse, compressed prose. Also has no omp/Pi entry in its own agent matrix.
+`home/config-src/agents/omp/extensions/caveman.ts` injects its activation
+rule (copied verbatim from `src/rules/caveman-activate.md` upstream) once
+per session via omp's `before_agent_start` hook — the native equivalent of
+the SessionStart hook caveman uses on Claude Code. The `/caveman-compress`
+memory-file-compression skill was **not** wired in; it vendors caveman's own
+Python scripts and an Anthropic API call, out of scope here.
+
+**pxpipe** (`pxpipe-proxy` on npm, `bun add -g`) renders bulky Anthropic
+request context (system prompt, tool docs, old history) as PNG pages —
+images are billed by pixel dimensions, not text length, so dense content
+costs fewer tokens. Runs as a LaunchAgent
+(`Library/LaunchAgents/dev.pxpipe.proxy.plist.tmpl`, `RunAtLoad` +
+`KeepAlive`, so it survives reboots and crashes) listening on
+`127.0.0.1:47821`. omp is pointed at it via `ANTHROPIC_BASE_URL` in
+`~/.omp/agent/.env` (`home/config-src/agents/omp/env`) — scoped to omp only
+through `.env` file precedence, not a shell-wide export, so Claude Code /
+Claude Desktop / anything else on the machine still talks to Anthropic
+directly. It is lossy on byte-exact content (hex strings, hashes); see
+pxpipe's own `docs/NOT-OCR.md` before relying on it for anything precision
+-critical.
+
+**Headroom** (github.com/gglucass/headroom-desktop, installed manually — see
+Brewfile) is a **paid** menu-bar app bundling its own optimization pipeline
+plus rtk. Its own README states it supports Claude Code and Codex only — no
+omp/Pi integration exists upstream, and none was built here. Installed for
+completeness since it was requested; account signup and plan selection are
+manual steps inside the app that couldn't be completed on your behalf.
 
 ## Setup
 

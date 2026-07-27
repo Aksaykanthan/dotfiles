@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+if ! command -v bun >/dev/null 2>&1; then
+  echo "==> bun not on PATH yet, skipping pxpipe install/LaunchAgent"
+  exit 0
+fi
+
+echo "==> Installing pxpipe-proxy globally via bun"
+bun add -g pxpipe-proxy
+
+echo "==> Loading pxpipe LaunchAgent"
+launchctl bootout "gui/$(id -u)/dev.pxpipe.proxy" >/dev/null 2>&1 || true
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/dev.pxpipe.proxy.plist"
+{{ end -}}

@@ -1,0 +1,8 @@
+# pxpipe local proxy — scoped to omp only via .env precedence (omp reads
+# ~/.omp/agent/.env before ~/.env; other Anthropic-consuming tools on this
+# machine, e.g. Claude Code/Desktop, are unaffected since they don't read
+# this file). See docs/environment-variables.md in oh-my-pi for the
+# ANTHROPIC_BASE_URL fallback-base-URL behavior this relies on. Not a
+# secret — just a localhost port, safe to commit. Requires the pxpipe
+# LaunchAgent (Library/LaunchAgents/dev.pxpipe.proxy.plist.tmpl) running.
+ANTHROPIC_BASE_URL=http://127.0.0.1:47821

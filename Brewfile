@@ -25,6 +25,7 @@ brew "neovim"
 brew "node@24"
 brew "openfortivpn"
 brew "ripgrep"
+brew "rtk"               # CLI proxy that compresses dev-command output before it reaches an AI agent's context; wired into omp via home/config-src/agents/omp/extensions/rtk-rewrite.ts
 brew "sleepwatcher"      # runs ~/.wakeup and ~/.sleep, see macos/scripts layer
 brew "k9s"
 brew "television"        # `tv` — general-purpose fuzzy finder TUI
@@ -73,3 +74,6 @@ cask "zen-browser"
 # - boringNotch:            https://github.com/TheBoredTeam/boring-notch/releases
 # - VS Code Insiders:       https://code.visualstudio.com/insiders (cask "visual-studio-code" installs stable only)
 # - Raycast Beta:           join the beta channel from within Raycast > Preferences > Advanced
+# - Headroom:                https://github.com/gglucass/headroom-desktop/releases/latest (paid subscription app;
+#                             signup/plan selection is a manual step inside the app. Supports Claude Code + Codex
+#                             only today, no omp/Pi integration — see its README's client support note.)
