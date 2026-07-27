@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/coding-agent/src/config/mcp-schema.json",
+  "mcpServers": {
+    "overleaf": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "overleaf-mcp-plus[compile]", "overleaf-mcp"],
+      "env": {
+        "OVERLEAF_SESSION": "OVERLEAF_SESSION",
+        "OVERLEAF_GIT_TOKEN": "OVERLEAF_GIT_TOKEN"
+      }
+    }
+  }
+}

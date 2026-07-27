@@ -1,0 +1,12 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+if ! command -v bun >/dev/null 2>&1; then
+  echo "==> bun not on PATH yet, skipping Oh My Pi install (run 'bun install -g @oh-my-pi/pi-coding-agent' later)"
+  exit 0
+fi
+
+echo "==> Installing Oh My Pi (omp) globally via bun"
+bun install -g @oh-my-pi/pi-coding-agent
+{{ end -}}

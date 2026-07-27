@@ -10,7 +10,9 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
   zellij as the multiplexer inside it
 - Editors: LazyVim, Zed, VS Code settings and extensions
 - CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), zoxide, ripgrep, bat, macfetch
-- AI tools: Claude, Codex, Oh My Pi
+- AI tools: Claude, Codex, Oh My Pi (`omp`, installed globally via `bun install
+  -g @oh-my-pi/pi-coding-agent`; its `config.yml` and MCP server registry
+  `mcp.json` are both chezmoi-managed, see below)
 - macOS: `.wakeup`, `.sleep`, selected app preferences, and safe defaults
 - Packages and apps: `Brewfile`
 
@@ -53,6 +55,24 @@ in this repository.
 For a path inside a template, use `{{ .chezmoi.homeDir }}` or a value from
 `.chezmoidata.yaml`; never hardcode `/Users/<name>`. The Codex configuration
 uses this pattern and is rendered by chezmoi rather than symlinked.
+
+## Oh My Pi MCP servers
+
+`home/config-src/agents/omp/mcp.json` (symlinked to `~/.omp/agent/mcp.json`)
+registers MCP servers for `omp`. It never contains raw credentials — server
+`env` blocks reference environment variable *names* (e.g. `OVERLEAF_SESSION`)
+that `omp` resolves at connect time from the shell environment. The actual
+secret values live in `~/.config/fish/conf.d/secrets.fish`, a local file that
+is deliberately **not** chezmoi-managed and **not** committed here — fish
+auto-sources `conf.d/*.fish`, and `~/.config/fish/conf.d/` only has
+`config.fish` under chezmoi's control, so anything else placed there is
+machine-local by construction. Recreate that file by hand on a new machine:
+
+```fish
+# ~/.config/fish/conf.d/secrets.fish  (chmod 600, never committed)
+set -gx OVERLEAF_SESSION "..."
+set -gx OVERLEAF_GIT_TOKEN "..."
+```
 
 ## Setup
 
