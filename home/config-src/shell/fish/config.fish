@@ -194,14 +194,34 @@ bind -M insert \cn history-prefix-search-forward
 #   enter, so history and `type` show real commands, not an
 #   opaque wrapper function. Trade-off: unlike alias, abbreviations
 #   only expand for text typed at the prompt, never inside scripts
-#   or other functions - fine here, nothing in this repo calls
-#   these names expecting alias-style behavior.
+#   or other functions.
 #   git aliases also live in ~/.gitconfig (co, br, ci, st, lg, ...);
 #   the git/docker/kubectl snippets below are the shell-level layer
 #   on top - skip typing the command name entirely. carapace (above)
 #   still drives their TAB completion.
+#
+#   `ls` is the deliberate exception: as an abbreviation it expanded
+#   into a wall of eza flags on every prompt line, and it only fired
+#   for text typed interactively. A function (which is all fish's
+#   `alias` builds anyway) keeps the prompt clean and applies inside
+#   scripts and functions too. Guarded on eza so `ls` falls back to
+#   the system binary on a machine where eza isn't installed yet.
+#
+#   The explicit `.` matters: given no path argument, eza prints
+#   nothing at all when stdout isn't a tty, so `ls | wc -l` and
+#   `set files (ls)` would silently come back empty. Harmless while
+#   this was an abbr - those never expand outside the prompt - but a
+#   real trap now that the name resolves everywhere. The test is for
+#   a non-flag argument, not just any argument, so `ls -a | head`
+#   gets the fallback too.
 # --------------------------------------------------------------
-abbr -a ls 'eza --long --group --group-directories-first --icons --header --time-style long-iso'
+if type -q eza
+    function ls --description 'eza: long, grouped, icons, ISO timestamps'
+        string match -qv -- '-*' $argv; or set -a argv .
+        eza --long --group --group-directories-first --icons --header \
+            --time-style long-iso $argv
+    end
+end
 if type -q bat
     abbr -a cat bat
 end
