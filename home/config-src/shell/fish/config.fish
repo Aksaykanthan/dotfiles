@@ -94,17 +94,6 @@ set -g fish_pager_color_selected_background --background=32344a
 set -g fish_greeting ''
 
 if status is-interactive
-    set -l tips \
-        "zoxide: 'cd foo' jumps to any visited dir by frecency" \
-        "atuin: Ctrl+R searches synced, cross-machine shell history" \
-        "fzf: Ctrl+T pastes a fuzzy-picked path, Alt+C fuzzy-cds" \
-        "eza: 'ls' already shows icons, git status, long format" \
-        "zellij: 'zj' attaches (or creates) the 'main' session" \
-        "k9s: 'k9' opens the Kubernetes dashboard" \
-        "bat: 'cat' and man pages now have syntax highlighting" \
-        "vi mode: Alt+s prepends sudo to the current/last command" \
-        "yazi: 'l' opens a full-screen file manager right here"
-
     if type -q macfetch
         macfetch
     else
@@ -131,7 +120,6 @@ if status is-interactive
     set_color bb9af7
     echo -n '› '
     set_color c0caf5
-    echo $tips[(random 1 (count $tips))]
     set_color normal
 end
 
@@ -161,6 +149,12 @@ end
 # after so its binding wins.
 # --------------------------------------------------------------
 if type -q fzf
+    # fzf_complete runs fzf with --multi, where Tab means toggle-select
+    # +down - so tabbing through the list marks every row it passes and
+    # Enter inserts all of them. Rebind Tab/Shift+Tab inside the picker
+    # to plain navigation and move multi-select to Ctrl+S.
+    set -gx FZF_COMPLETION_OPTS '--bind=tab:down,shift-tab:up,ctrl-s:toggle'
+    set -gx FZF_EXPANSION_OPTS '--bind=tab:down,shift-tab:up,ctrl-s:toggle'
     fzf --fish | source
     bind \t fzf_complete
     bind -M insert \t fzf_complete
@@ -223,51 +217,50 @@ test -f "$HOME/vnc.sh"
 and abbr -a vnc "bash $HOME/vnc.sh"
 
 # git
-abbr -a gs  'git status -sb'
-abbr -a ga  'git add'
+abbr -a gs 'git status -sb'
+abbr -a ga 'git add'
 abbr -a gaa 'git add --all'
-abbr -a gc  'git commit'
+abbr -a gc 'git commit'
 abbr -a gcm 'git commit -m'
-abbr -a gp  'git push'
+abbr -a gp 'git push'
 abbr -a gpl 'git pull'
 abbr -a gco 'git checkout'
-abbr -a gb  'git branch'
-abbr -a gd  'git diff'
-abbr -a gl  'git lg'
+abbr -a gb 'git branch'
+abbr -a gd 'git diff'
+abbr -a gl 'git lg'
 abbr -a gst 'git stash'
 
 # docker
 if type -q docker
-    abbr -a d    docker
-    abbr -a dc   'docker compose'
-    abbr -a dps  'docker ps'
-    abbr -a dex  'docker exec -it'
+    abbr -a d docker
+    abbr -a dc 'docker compose'
+    abbr -a dps 'docker ps'
+    abbr -a dex 'docker exec -it'
     abbr -a dlog 'docker logs -f'
 end
 
 # kubectl (k9s above got renamed to k9 so bare k is kubectl, the
 # universal convention)
 if type -q kubectl
-    abbr -a k   kubectl
+    abbr -a k kubectl
     abbr -a kgp 'kubectl get pods'
     abbr -a kgs 'kubectl get svc'
     abbr -a kdp 'kubectl describe pod'
     abbr -a kaf 'kubectl apply -f'
-    abbr -a kl  'kubectl logs -f'
-    abbr -a kx  'kubectl exec -it'
+    abbr -a kl 'kubectl logs -f'
+    abbr -a kx 'kubectl exec -it'
 end
 
 # --------------------------------------------------------------
 # Environment variables
 # --------------------------------------------------------------
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
-set -gx TERM xterm-256color
 set -gx CHROME_EXECUTABLE "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
 
 # bat - colorized `cat` (abbreviated above) and manpager
 if type -q bat
     set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
-    set -gx MANROFFOPT '-c'
+    set -gx MANROFFOPT -c
 end
 
 # cargo (was ~/.zshenv: `. "$HOME/.cargo/env"`)
@@ -288,19 +281,12 @@ and source "$HOME/.orbstack/shell/init2.fish"
 fish_add_path -P "/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin"
 fish_add_path -P -a "/Applications/Zed.app/Contents/MacOS"
 
-fish_add_path -P "$HOME/.antigravity-ide/antigravity-ide/bin"
-
-set -gx PNPM_HOME "$HOME/Library/pnpm"
-fish_add_path -P "$PNPM_HOME"
 fish_add_path -P "$HOME/.local/bin"
 
 # React Native / Android
 set -gx JAVA_HOME (/usr/libexec/java_home 2>/dev/null)
 set -gx ANDROID_HOME "$HOME/Library/Android/sdk"
 fish_add_path -P -a "$ANDROID_HOME/emulator" "$ANDROID_HOME/platform-tools"
-
-# agam
-fish_add_path -P "$HOME/coding/agam/.venv/bin"
 
 # conda - CONDA_DISABLE_FISH_PROMPT skips conda.fish's fish_prompt/
 # fish_right_prompt wrapping entirely. Without it, conda hijacks both
