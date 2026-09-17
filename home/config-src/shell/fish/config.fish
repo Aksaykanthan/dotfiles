@@ -5,6 +5,11 @@
 # fish integration; anything without one falls back to carapace.
 # ==============================================================
 
+# Homebrew first: GUI-launched terminals (Ghostty -> Zellij) don't
+# inherit a login PATH, and everything below uses `type -q` checks.
+test -x /opt/homebrew/bin/brew
+and /opt/homebrew/bin/brew shellenv fish | source
+
 # --------------------------------------------------------------
 # Vi key bindings + mode indicator
 # --------------------------------------------------------------
@@ -137,6 +142,13 @@ end
 # zoxide - smarter `cd`
 # --------------------------------------------------------------
 if type -q zoxide
+    # Pin the database location so zsm (Zellij) and the shell agree.
+    set -gx _ZO_DATA_DIR "$HOME/Library/Application Support/zoxide"
+    # Don't rank $HOME, secrets, temp dirs, or dependency/VCS internals.
+    set -gx _ZO_EXCLUDE_DIRS "$HOME:$HOME/.ssh:$HOME/.ssh/*:/tmp/*:/private/*:*/node_modules/*:*/.git/*"
+    # Store /tmp-style symlinks by their real path to avoid duplicates.
+    set -gx _ZO_RESOLVE_SYMLINKS 1
+    set -gx _ZO_FZF_OPTS "--height=40% --layout=reverse --border --preview='eza -1 --icons --color=always {2..}'"
     zoxide init --cmd cd fish | source
 end
 

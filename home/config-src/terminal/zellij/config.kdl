@@ -1,16 +1,43 @@
-// Zellij terminal multiplexer. Theme matches Ghostty's "TokyoNight Night"
+// Zellij terminal multiplexer. Theme matches Ghostty's "Catppuccin Mocha"
 // for a cohesive look between the terminal and the multiplexer inside it.
 
-theme "tokyo-night-dark"
+theme "catppuccin-mocha"
 default_layout "compact"
-default_shell "fish"
+// Absolute path: Ghostty launched from the Dock has no /opt/homebrew/bin on PATH.
+default_shell "/opt/homebrew/bin/fish"
 
-// Rounded pane borders + no first-run noise.
+// No first-run noise.
 show_startup_tips false
 show_release_notes false
+
+// Mouse + clipboard niceties.
+mouse_mode true
+copy_on_select true
+scroll_buffer_size 50000
+
+// Keep sessions around after closing Ghostty so zsm can resurrect them.
+session_serialization true
+pane_viewport_serialization true
 
 ui {
     pane_frames {
         rounded_corners true
+        hide_session_name false
+    }
+}
+
+// zsm - zoxide-powered session manager (Alt+s).
+// Zellij downloads and caches the pinned release on first use.
+keybinds {
+    shared_except "locked" {
+        bind "Alt s" {
+            LaunchOrFocusPlugin "https://github.com/liam-mackie/zsm/releases/download/v0.5.0/zsm.wasm" {
+                floating true
+                move_to_focused_tab true
+                mode "session"
+                session_separator "."
+                show_resurrectable_sessions true
+            }
+        }
     }
 }

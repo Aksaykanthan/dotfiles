@@ -20,6 +20,7 @@ brew "ffmpeg"
 brew "fzf"
 brew "gh"
 brew "gh-dash"
+brew "herdr"             # agent multiplexer TUI for terminal
 brew "macfetch"          # neofetch-style system summary, shown at login (see fish_greeting)
 brew "neovim"
 brew "node@24"

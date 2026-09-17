@@ -10,11 +10,18 @@ window-padding-x = 10
 window-padding-y = 10
 
 
-# Theme
-theme = "TokyoNight Night"
+# Theme (matches Zellij's catppuccin-mocha)
+theme = "Catppuccin Mocha"
 
 # Cursor
 cursor-style = block
+
+# No title bar, traffic-light buttons, or tab strip - Zellij handles tabs/panes
+window-decoration = none
+macos-titlebar-style = hidden
+
+# Always start inside Zellij; reattach to the "main" session if it exists
+command = /opt/homebrew/bin/zellij attach --create main
 
 
 

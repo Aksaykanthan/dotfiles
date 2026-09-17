@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Seed zoxide's database with project directories so `cd <name>` and the
+# zsm session picker are useful on a fresh machine before any history exists.
+set -euo pipefail
+
+export _ZO_DATA_DIR="$HOME/Library/Application Support/zoxide"
+
+if command -v zoxide >/dev/null 2>&1; then
+  echo "==> zoxide: seeding database"
+  mkdir -p "$_ZO_DATA_DIR"
+  for dir in "$HOME/development" "$HOME/evolveus" "$HOME/development"/*/ "$HOME/evolveus"/*/; do
+    [ -d "$dir" ] && zoxide add "${dir%/}" || true
+  done
+fi
+{{ end -}}
