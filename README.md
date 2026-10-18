@@ -17,7 +17,7 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
 - Wallpapers: a pinned Catppuccin set fetched into
   `~/Pictures/Wallpapers/catppuccin` by a one-time hook; `wall`, `wall
   random`, `wall <name>`, `wall ls` switch between them
-- Editors: LazyVim, Zed, VS Code settings and extensions
+- Editors: LazyVim (Catppuccin, transparent), Zed, VS Code settings and extensions
 - CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), worktrunk (`wt`), zoxide, ripgrep, bat, macfetch
 - AI tools: Claude, Codex, Oh My Pi (`omp`, installed globally via `bun install
   -g @oh-my-pi/pi-coding-agent`; its `config.yml` and MCP server registry
@@ -35,9 +35,10 @@ Most managed configuration files are symlinks into
 `home/config-src/`. Edit either the live file (for example `~/.config/fish/config.fish`) or its
 source file; the change is live immediately.
 
-`~/.config/nvim` is different: chezmoi clones
-[LazyVim/starter](https://github.com/LazyVim/starter) there as its own Git
-repository. Customize and commit it from that directory.
+`~/.config/nvim` is a symlink to `home/config-src/editors/nvim`, a LazyVim
+config: extras are listed in `lazyvim.json`, overrides live in
+`lua/plugins/`, and `lazy-lock.json` pins plugin versions. `:Lazy update`
+rewrites the lock file in place; commit it with the rest.
 
 ## Layout
 
@@ -46,7 +47,6 @@ Brewfile                 Homebrew formulae, casks, and fonts
 scripts/                 Manual maintenance scripts
 home/
   .chezmoiscripts/       Ordered one-time setup hooks
-  .chezmoiexternal.yaml  LazyVim Git clone definition
   .chezmoidata.yaml       Personal, non-secret template settings
   config-src/            Actual configuration files
 ```
@@ -219,7 +219,6 @@ oh-my-posh print primary --config ~/.config/oh-my-posh/config.yaml
 
 # Editors.
 zed .
-git -C ~/.config/nvim remote get-url origin
 nvim --headless "+Lazy! sync" +qa
 
 # Managed CLI configuration.

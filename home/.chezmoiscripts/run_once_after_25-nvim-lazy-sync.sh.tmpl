@@ -1,7 +1,8 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
-# LazyVim starter is cloned by .chezmoiexternal.yaml; do the first headless
-# plugin sync here so `nvim` isn't slow/interactive the first time it's run.
+# ~/.config/nvim is symlinked to config-src/editors/nvim; do the first
+# headless plugin sync here (pinned by its lazy-lock.json) so `nvim` isn't
+# slow/interactive the first time it's run.
 set -euo pipefail
 
 if command -v nvim >/dev/null 2>&1 && [ -d "$HOME/.config/nvim" ]; then

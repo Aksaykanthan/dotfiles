@@ -23,6 +23,15 @@ brew "gh-dash"
 brew "herdr"             # agent multiplexer TUI for terminal
 brew "macfetch"          # neofetch-style system summary, shown at login (see fish_greeting)
 brew "neovim"
+# LazyVim external tools (see `:checkhealth lazyvim snacks`)
+brew "ast-grep"          # structural search/replace for grug-far
+brew "fd"                # file finder for Snacks picker/explorer
+brew "ghostscript"       # `gs`: PDF rendering in Snacks image
+brew "imagemagick"       # image conversion for Snacks image
+brew "lazygit"           # <leader>gg
+brew "mermaid-cli"       # `mmdc`: Mermaid diagrams in markdown
+brew "tectonic"          # LaTeX math rendering in markdown
+brew "tree-sitter-cli"   # builds nvim-treesitter parsers
 brew "node@24"
 brew "openfortivpn"
 brew "ripgrep"
