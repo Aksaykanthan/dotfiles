@@ -1,0 +1,14 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# kindaVim: vim motions in every macOS text field. Off in apps that already
+# do vim themselves (Ghostty -> fish/nvim/Claude, Zed's vim_mode), so the
+# two don't fight over Escape. The Accessibility grant it needs is manual.
+set -euo pipefail
+
+defaults write mo.com.sleeplessmind.kindaVim appsToIgnore -string '["com.mitchellh.ghostty","dev.zed.Zed"]'
+
+if [ -d /Applications/kindaVim.app ]; then
+  echo "==> kindaVim: launching (grant Accessibility in System Settings when asked)"
+  open -a kindaVim
+fi
+{{ end -}}

@@ -1,0 +1,24 @@
+[metadata]
+name = "zellij-sessions"
+description = "List, switch to, and kill Zellij sessions"
+requirements = ["zellij"]
+
+[source]
+command = "zellij list-sessions --short --no-formatting"
+
+[preview]
+command = "zellij list-sessions --no-formatting | grep -E '^{} '; echo; zellij -s '{}' action list-panes 2>/dev/null"
+
+[keybindings]
+enter = "actions:switch"
+ctrl-d = "actions:kill"
+
+[actions.switch]
+description = "Switch to the session (attach when outside Zellij)"
+command = "sh -c 'if [ -n \"$ZELLIJ\" ]; then zellij action switch-session \"{}\"; else zellij attach \"{}\"; fi'"
+mode = "execute"
+
+[actions.kill]
+description = "Kill the session and delete it so it can't be resurrected"
+command = "sh -c 'zellij kill-session \"{}\"; zellij delete-session \"{}\"'"
+mode = "fork"

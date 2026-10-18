@@ -8,6 +8,11 @@ background-blur = 20
 term = "xterm-256color"
 mouse-hide-while-typing = true
 
+# Animated starfield behind the text (shaders/starfield.glsl; only paints
+# background pixels). Remove these two lines if it costs too much battery.
+custom-shader = ~/.config/ghostty/shaders/starfield.glsl
+custom-shader-animation = true
+
 
 # Padding
 window-padding-x = 10

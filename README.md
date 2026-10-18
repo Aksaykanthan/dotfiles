@@ -14,6 +14,11 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
   (`vim_keys`), readline (`~/.inputrc`) and libedit (`~/.editrc`) REPLs,
   Zed. omp has no vim mode; `$EDITOR=nvim` makes its Ctrl+G (and Claude
   Code's) open the prompt in nvim
+- Desktop (DevOps Toolbox style): kindaVim adds vim motions to every
+  text field, except Ghostty and Zed which do their own; Ghostty draws an
+  animated starfield shader behind the text
+- television: the community cable channels (git, docker, k8s, gh, brew,
+  ...) plus a `zellij-sessions` channel; `tv channels`, or Ctrl+a t in Zellij
 - Wallpapers: a pinned Catppuccin set fetched into
   `~/Pictures/Wallpapers/catppuccin` by a one-time hook; `wall`, `wall
   random`, `wall <name>`, `wall ls` switch between them

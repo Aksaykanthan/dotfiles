@@ -287,6 +287,15 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "zellij:configuration" { floating true; move_to_focused_tab true; }
             SwitchToMode "Normal"
         }
+        // television: pick any cable channel (git, docker, k8s, sessions, ...)
+        bind "t" {
+            Run "/opt/homebrew/bin/tv" "channels" {
+                floating true
+                close_on_exit true
+                name "television"
+            }
+            SwitchToMode "Normal"
+        }
         bind "d" { Detach; }
         bind "Q" { Quit; }
     }

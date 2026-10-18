@@ -71,6 +71,7 @@ cask "claude"
 cask "codex"
 cask "ghostty"
 cask "iina"
+cask "kindavim"           # vim motions in every macOS text field (paid; Accessibility grant is manual)
 cask "localsend"
 cask "obsidian"
 cask "orbstack"
