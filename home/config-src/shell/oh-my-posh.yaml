@@ -5,9 +5,9 @@ console_title_template: '{{ .Shell }} in {{ .Folder }}'
 
 # Minimal theme: plain-style segments, no background swatches anywhere —
 # every segment paints foreground text only, so the prompt is just colored
-# text on your terminal's own background. Palette matches the Tokyo Night
-# theme shared by Ghostty, fish's syntax highlighting, and zellij, so the
-# whole terminal environment reads as one thing.
+# text on your terminal's own background. Palette is Catppuccin Mocha,
+# shared by Ghostty, fish's syntax highlighting, and Zellij, so the whole
+# terminal environment reads as one thing.
 #
 # Single left-aligned block only - fish's fish_right_prompt anchors to the
 # END of whatever fish_prompt renders, which for this prompt is the second
@@ -15,10 +15,11 @@ console_title_template: '{{ .Shell }} in {{ .Folder }}'
 # render next to the path/git line like you'd expect; it renders squeezed
 # onto the same line you type on. Not worth the confusion for a clock.
 palette:
-  blue: "#7aa2f7"
-  yellow: "#e0af68"
-  red: "#f7768e"
-  muted: "#565f89"
+  blue: "#89b4fa"
+  mauve: "#cba6f7"
+  yellow: "#f9e2af"
+  red: "#f38ba8"
+  muted: "#6c7086"
 
 blocks:
   - type: prompt
@@ -55,9 +56,9 @@ blocks:
 
       - type: text
         style: plain
-        foreground: p:blue
+        foreground: p:mauve
         template: "\n❯ "
 
 transient_prompt:
-  foreground: p:blue
+  foreground: p:mauve
   template: "❯ "

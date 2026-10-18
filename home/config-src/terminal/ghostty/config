@@ -1,8 +1,12 @@
 # ========== Appearance ==========
+# DevOps Toolbox look (omerxx/dotfiles): Catppuccin Mocha on a translucent,
+# blurred window, no decorations - the wallpaper bleeds through.
 font-family = "JetBrainsMono Nerd Font"
 font-size = 13
-background-opacity = 0.92
+background-opacity = 0.85
+background-blur = 20
 term = "xterm-256color"
+mouse-hide-while-typing = true
 
 
 # Padding
@@ -13,8 +17,11 @@ window-padding-y = 10
 # Theme (matches Zellij's catppuccin-mocha)
 theme = "Catppuccin Mocha"
 
-# Cursor
+# Cursor. Ghostty's shell integration would force a bar cursor at the
+# prompt; turn that off so fish's vi-mode cursor shapes (block in normal,
+# line in insert) come through.
 cursor-style = block
+shell-integration-features = no-cursor
 
 # No title bar, traffic-light buttons, or tab strip - Zellij handles tabs/panes
 window-decoration = none
@@ -22,11 +29,23 @@ macos-titlebar-style = hidden
 
 # Always start inside Zellij; reattach to the "main" session if it exists
 command = /opt/homebrew/bin/zellij attach --create main
+# Launched from the Dock, Ghostty only has /usr/bin:/bin:... on PATH. The
+# Zellij server inherits it, and plugins run commands with the server's env,
+# so zsm couldn't find `zoxide` and zjstatus couldn't find Homebrew tools.
+env = PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 
 
 
 # ========== Keybindings ==========
+
+# Option acts as Alt, so Zellij's Alt+h/j/k/l/n/w/z/... shortcuts and the
+# Alt shortcuts in fish/Claude Code/readline actually reach them (otherwise
+# Option+h types "˙"). Option+Left/Right stay word jumps: Ghostty's own
+# defaults send them as ESC b / ESC f, which Zellij binds to nothing.
+macos-option-as-alt = true
+keybind = alt+arrow_left=esc:b
+keybind = alt+arrow_right=esc:f
 
 # Vim mode: Alt+V enters a modal key table for scrollback navigation
 # and search, styled after Vim's normal-mode motions. Ghostty has no

@@ -1,0 +1,2 @@
+# BSD libedit (macOS sqlite3, lldb, /usr/bin/python3, sftp, ...): vi editing.
+bind -v

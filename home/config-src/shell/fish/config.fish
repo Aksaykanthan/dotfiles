@@ -54,33 +54,33 @@ bind -M insert \es __fish_prepend_sudo
 bind -M default \es __fish_prepend_sudo
 
 # --------------------------------------------------------------
-# Syntax highlighting colors (Tokyo Night, matches the Ghostty
-# theme). Known commands/builtins/functions stand out in bold
-# green; anything fish can't resolve is bold red, so a typo is
-# obvious before you hit enter.
+# Syntax highlighting colors (Catppuccin Mocha, matches Ghostty,
+# Zellij, and oh-my-posh). Known commands/builtins/functions stand
+# out in bold green; anything fish can't resolve is bold red, so a
+# typo is obvious before you hit enter.
 # --------------------------------------------------------------
-set -g fish_color_normal c0caf5
-set -g fish_color_command 9ece6a --bold
-set -g fish_color_keyword bb9af7 --bold
-set -g fish_color_param c0caf5
-set -g fish_color_option c0caf5
-set -g fish_color_quote e0af68
-set -g fish_color_redirection 7dcfff
-set -g fish_color_end bb9af7
-set -g fish_color_error f7768e --bold
-set -g fish_color_comment 565f89 --italics
-set -g fish_color_operator 7dcfff
-set -g fish_color_escape ff9e64
-set -g fish_color_autosuggestion 565f89
+set -g fish_color_normal cdd6f4
+set -g fish_color_command a6e3a1 --bold
+set -g fish_color_keyword cba6f7 --bold
+set -g fish_color_param f2cdcd
+set -g fish_color_option f2cdcd
+set -g fish_color_quote f9e2af
+set -g fish_color_redirection f5c2e7
+set -g fish_color_end fab387
+set -g fish_color_error f38ba8 --bold
+set -g fish_color_comment 7f849c --italics
+set -g fish_color_operator f5c2e7
+set -g fish_color_escape eba0ac
+set -g fish_color_autosuggestion 6c7086
 set -g fish_color_valid_path --underline
-set -g fish_color_cwd 9ece6a
-set -g fish_color_cwd_root f7768e
-set -g fish_color_selection c0caf5 --bold --background=32344a
-set -g fish_color_search_match --background=32344a
-set -g fish_pager_color_prefix 7aa2f7 --bold
-set -g fish_pager_color_completion c0caf5
-set -g fish_pager_color_description 565f89
-set -g fish_pager_color_selected_background --background=32344a
+set -g fish_color_cwd f9e2af
+set -g fish_color_cwd_root f38ba8
+set -g fish_color_selection cdd6f4 --bold --background=313244
+set -g fish_color_search_match --background=313244
+set -g fish_pager_color_prefix cba6f7 --bold
+set -g fish_pager_color_completion cdd6f4
+set -g fish_pager_color_description 6c7086
+set -g fish_pager_color_selected_background --background=313244
 
 # --------------------------------------------------------------
 # Greeting: swap the stock "Welcome to fish ... Type help ..."
@@ -107,24 +107,24 @@ if status is-interactive
             | string replace -ra '\s+' ' ' | string trim)
         set -l os_version (sw_vers -productVersion 2>/dev/null)
 
-        set_color --bold 7aa2f7
+        set_color --bold cba6f7
         echo -n (whoami)@(hostname -s)
-        set_color 565f89
+        set_color 6c7086
         echo -n '  ·  '(date '+%a %d %b, %H:%M')
         set_color normal
         echo
 
-        set_color 9ece6a
+        set_color a6e3a1
         echo -n "macOS $os_version"
-        set_color 565f89
+        set_color 6c7086
         echo -n "  ·  fish $version  ·  up $uptime_str"
         set_color normal
         echo
     end
 
-    set_color bb9af7
+    set_color cba6f7
     echo -n '› '
-    set_color c0caf5
+    set_color cdd6f4
     set_color normal
 end
 
@@ -165,6 +165,15 @@ if type -q fzf
     # +down - so tabbing through the list marks every row it passes and
     # Enter inserts all of them. Rebind Tab/Shift+Tab inside the picker
     # to plain navigation and move multi-select to Ctrl+S.
+    # Catppuccin Mocha, rounded border, vim-ish ctrl-j/k (fzf's default)
+    # plus ctrl-d/u half-page scrolling of the preview.
+    set -gx FZF_DEFAULT_OPTS "\
+--color=bg+:#313244,bg:-1,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a,border:#6c7086,label:#cdd6f4 \
+--border=rounded --layout=reverse --height=50% \
+--bind=ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up"
     set -gx FZF_COMPLETION_OPTS '--bind=tab:down,shift-tab:up,ctrl-s:toggle'
     set -gx FZF_EXPANSION_OPTS '--bind=tab:down,shift-tab:up,ctrl-s:toggle'
     fzf --fish | source
@@ -284,13 +293,60 @@ if type -q kubectl
 end
 
 # --------------------------------------------------------------
+# wall - switch the desktop wallpaper (every display) to one of the
+# Catppuccin set fetched by run_once_after_50-wallpapers.
+#   wall            next image in the set
+#   wall random     random image
+#   wall forrest    first image whose name contains "forrest"
+#   wall ls         list the set
+# --------------------------------------------------------------
+function wall --description 'Switch the macOS wallpaper within ~/Pictures/Wallpapers/catppuccin'
+    set -l dir "$HOME/Pictures/Wallpapers/catppuccin"
+    set -l imgs $dir/*.{jpg,png}
+    if test (count $imgs) -eq 0
+        echo "wall: no images in $dir (run chezmoi apply)" >&2
+        return 1
+    end
+    set -l state "$dir/.current"
+    set -l pick
+    switch "$argv[1]"
+        case ls
+            for i in $imgs
+                basename $i
+            end
+            return
+        case random
+            set pick $imgs[(random 1 (count $imgs))]
+        case ''
+            set -l cur (cat $state 2>/dev/null)
+            set -l idx (contains -i -- "$cur" $imgs; or echo 0)
+            set pick $imgs[(math "$idx % "(count $imgs)" + 1")]
+        case '*'
+            set pick (string match -e -- $argv[1] $imgs)[1]
+            if test -z "$pick"
+                echo "wall: no image matching '$argv[1]'" >&2
+                return 1
+            end
+    end
+    osascript -e "tell application \"System Events\" to tell every desktop to set picture to POSIX file \"$pick\""
+    and echo $pick >$state
+    and echo (basename $pick)
+end
+
+# --------------------------------------------------------------
 # Environment variables
 # --------------------------------------------------------------
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
+# nvim everywhere a tool asks for an editor: Claude Code / omp Ctrl+G
+# (edit the prompt in $EDITOR), Zellij's Ctrl+a [ e (scrollback),
+# git commit messages, `fish`'s Alt+e, gh, ... Zed stays one `zed .` away.
+set -gx EDITOR nvim
+set -gx VISUAL nvim
 set -gx CHROME_EXECUTABLE "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
 
 # bat - colorized `cat` (abbreviated above) and manpager
 if type -q bat
+    set -gx BAT_THEME "Catppuccin Mocha"
     set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
     set -gx MANROFFOPT -c
 end
@@ -348,6 +404,12 @@ end
 # omp (this harness's CLI)
 if type -q omp
     omp completions fish | source
+end
+
+# worktrunk - `wt` git worktree manager; the shell function lets
+# `wt switch` / `wt new` cd the current shell into the worktree.
+if type -q wt
+    wt config shell init fish | source
 end
 
 # ngrok

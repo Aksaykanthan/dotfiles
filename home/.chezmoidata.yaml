@@ -65,8 +65,8 @@ terminal:
   app: ghostty
   font_family: JetBrainsMono Nerd Font
   font_size: 13
-  theme: TokyoNight Night
-  opacity: 0.92
+  theme: Catppuccin Mocha
+  opacity: 0.85
 
 homebrew:
   prefix: /opt/homebrew

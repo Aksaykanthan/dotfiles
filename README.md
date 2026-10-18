@@ -7,9 +7,18 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
 - Shell: fish with vi key bindings, a minimal no-background oh-my-posh
   prompt, and a macfetch system summary at login
 - Terminal: Ghostty (Alt+V for a Vim-style scrollback key table), with
-  zellij as the multiplexer inside it
+  zellij as the multiplexer inside it. Everything is Catppuccin Mocha,
+  styled after DevOps Toolbox (omerxx/dotfiles) — see "Zellij" below
+- Vim mode everywhere: fish, Claude Code (`editorMode`), Codex
+  (`[tui] vim_mode_default`), atuin (`keymap_mode = "auto"`), btop
+  (`vim_keys`), readline (`~/.inputrc`) and libedit (`~/.editrc`) REPLs,
+  Zed. omp has no vim mode; `$EDITOR=nvim` makes its Ctrl+G (and Claude
+  Code's) open the prompt in nvim
+- Wallpapers: a pinned Catppuccin set fetched into
+  `~/Pictures/Wallpapers/catppuccin` by a one-time hook; `wall`, `wall
+  random`, `wall <name>`, `wall ls` switch between them
 - Editors: LazyVim, Zed, VS Code settings and extensions
-- CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), zoxide, ripgrep, bat, macfetch
+- CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), worktrunk (`wt`), zoxide, ripgrep, bat, macfetch
 - AI tools: Claude, Codex, Oh My Pi (`omp`, installed globally via `bun install
   -g @oh-my-pi/pi-coding-agent`; its `config.yml` and MCP server registry
   `mcp.json` are both chezmoi-managed, see below)
@@ -41,6 +50,30 @@ home/
   .chezmoidata.yaml       Personal, non-secret template settings
   config-src/            Actual configuration files
 ```
+
+## Zellij
+
+`config-src/terminal/zellij/` holds the config, a `devops` layout with a
+zjstatus bar on top (session · tabs · mode · git branch · dir · clock),
+its swap layouts, and the `devops-mocha` theme (Catppuccin Mocha with a
+mauve active-pane frame). Plugins are pinned release URLs that Zellij
+downloads on first use: zjstatus, zellij-autolock, zsm, room, forgot.
+
+Keys (stock bindings are cleared):
+
+| Keys | Action |
+| :- | :- |
+| `Alt h/j/k/l` | move focus (h/l cross into the next tab) — works everywhere, even inside nvim/Claude |
+| `Alt n` · `Alt w` · `Alt e` · `Alt z` | new pane · toggle floating · float/embed · fullscreen |
+| `Alt 1-9` · `Alt [ ]` · `Alt = -` | go to tab · swap layout · resize |
+| `Alt s` · `Alt g` · `Alt ?` | sessions (zsm) · fuzzy tab picker (room) · key cheat sheet |
+| `Alt .` · `Alt Shift .` | toggle lock by hand · toggle autolock |
+| `Ctrl a` then `\|` `-` `c` `,` `n` `b` `x` `z` `p` `r` `m` `[` `/` `s` `d` | tmux-style prefix: split right/down, new/rename/next/prev tab, close, zoom, floating, resize/move/scroll/search mode, sessions, detach |
+
+autolock switches Zellij to Locked whenever the focused pane runs anything
+but the shell, so Ctrl keys reach nvim, fzf, Claude Code, omp, k9s, ...
+untouched; only `Alt` keys stay with Zellij. Option+Left/Right are left to
+the shell as word jumps.
 
 ## Personal settings
 

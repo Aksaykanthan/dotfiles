@@ -1,0 +1,14 @@
+# GNU readline (bash, psql, mysql, gdb, python built against readline, ...):
+# vi editing, same as fish's fish_vi_key_bindings.
+set editing-mode vi
+set keymap vi-insert
+set show-mode-in-prompt on
+# Cursor shape per mode: block in normal (command), bar in insert.
+set vi-cmd-mode-string "\1\e[2 q\2"
+set vi-ins-mode-string "\1\e[6 q\2"
+set keyseq-timeout 10
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set colored-stats on
+"\C-p": history-search-backward
+"\C-n": history-search-forward

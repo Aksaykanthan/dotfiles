@@ -33,6 +33,7 @@ brew "television"        # `tv` — general-purpose fuzzy finder TUI
 brew "tesseract"
 brew "tree"
 brew "whisper-cpp"
+brew "worktrunk"         # `wt` - git worktree manager for parallel AI-agent branches
 brew "yazi"
 brew "zellij"            # terminal multiplexer
 brew "zoxide"
