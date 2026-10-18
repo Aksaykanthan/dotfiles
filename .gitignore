@@ -1,2 +1,4 @@
 .DS_Store
 *.bak
+# omp writes this next to config.yml while saving settings
+home/config-src/agents/omp/config.yml.lock
