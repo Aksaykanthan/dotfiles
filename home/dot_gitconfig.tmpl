@@ -5,6 +5,21 @@
 	email = {{ .git.email | quote }}
 [core]
 	excludesfile = "{{ .chezmoi.homeDir }}/.config/git/ignore"
+	pager = delta
+[include]
+	path = "{{ .chezmoi.homeDir }}/.config/git/delta-catppuccin.gitconfig"
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	# Syntax-highlighted, word-level diffs with line numbers. n/N jump
+	# between files in the pager; `git diff | delta -s` for side-by-side.
+	features = catppuccin-mocha
+	navigate = true
+	line-numbers = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
 [github]
 	username = {{ index $github "user" | quote }}
 	protocol = {{ index $github "git_protocol" | quote }}

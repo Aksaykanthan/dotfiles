@@ -18,7 +18,7 @@ My personal macOS configuration, managed with [chezmoi](https://chezmoi.io).
   `~/Pictures/Wallpapers/catppuccin` by a one-time hook; `wall`, `wall
   random`, `wall <name>`, `wall ls` switch between them
 - Editors: LazyVim (Catppuccin, transparent), Zed, VS Code settings and extensions
-- CLI: git, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), worktrunk (`wt`), zoxide, ripgrep, bat, macfetch
+- CLI: git (diffs through delta, Catppuccin), lazygit, gh, gh-dash, btop, k9s, atuin, carapace, television (`tv`), worktrunk (`wt`), zoxide, ripgrep, bat, macfetch
 - AI tools: Claude, Codex, Oh My Pi (`omp`, installed globally via `bun install
   -g @oh-my-pi/pi-coding-agent`; its `config.yml` and MCP server registry
   `mcp.json` are both chezmoi-managed, see below)
