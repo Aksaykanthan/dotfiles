@@ -32,6 +32,11 @@ shell-integration-features = no-cursor
 window-decoration = none
 macos-titlebar-style = hidden
 
+# Start in non-native fullscreen: stays on the current desktop and keeps the
+# blur/transparency. The menu bar is hidden only while Ghostty is focused.
+fullscreen = non-native
+macos-non-native-fullscreen = true
+
 # Always start inside Zellij; reattach to the "main" session if it exists
 command = /opt/homebrew/bin/zellij attach --create main
 # Launched from the Dock, Ghostty only has /usr/bin:/bin:... on PATH. The
