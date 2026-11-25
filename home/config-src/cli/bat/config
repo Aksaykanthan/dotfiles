@@ -1,0 +1,3 @@
+# Catppuccin Mocha everywhere bat runs - including previews from tv, fzf,
+# lazygit, and Zellij panes that never see fish's $BAT_THEME.
+--theme="Catppuccin Mocha"
