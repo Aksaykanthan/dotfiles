@@ -253,12 +253,11 @@ abbr -a .. 'cd ..'
 abbr -a ... 'cd ../..'
 abbr -a l yazi
 abbr -a k9 k9s
+abbr -a lg lazygit
 abbr -a zj 'zellij attach -c main'
-test -f "$HOME/vnc.sh"
-and abbr -a vnc "bash $HOME/vnc.sh"
 
 # git
-abbr -a gs 'git status -sb'
+abbr -a gst 'git status -sb'
 abbr -a ga 'git add'
 abbr -a gaa 'git add --all'
 abbr -a gc 'git commit'
@@ -269,7 +268,6 @@ abbr -a gco 'git checkout'
 abbr -a gb 'git branch'
 abbr -a gd 'git diff'
 abbr -a gl 'git lg'
-abbr -a gst 'git stash'
 
 # docker
 if type -q docker
@@ -417,6 +415,4 @@ if type -q ngrok
     ngrok completion fish | source
 end
 
-# OpenClaw
-test -f "$HOME/.openclaw/completions/openclaw.fish"
-and source "$HOME/.openclaw/completions/openclaw.fish"
+set -gx GPG_TTY (tty)
