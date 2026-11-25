@@ -4,7 +4,7 @@
 //
 // Key model (clear-defaults: nothing here comes from Zellij's stock set):
 //   * Alt+<key>     works in EVERY mode, even while locked inside nvim/claude.
-//   * Ctrl+a <key>  the "prefix" (tmux mode) - only at the shell prompt.
+//   * Ctrl+a <key>  the "prefix" (tmux mode) - everywhere, like tmux.
 //   * autolock      flips Zellij to Locked whenever anything but the shell is
 //                   in the focused pane, so Ctrl keys reach nvim, fzf,
 //                   Claude Code, omp, k9s, ... untouched.
@@ -154,7 +154,22 @@ keybinds clear-defaults=true {
         bind "Alt 7" { GoToTab 7; }
         bind "Alt 8" { GoToTab 8; }
         bind "Alt 9" { GoToTab 9; }
+        // Extract and copy matches from the focused pane.
+        bind "Alt x" {
+            LaunchOrFocusPlugin "file:/Users/aksaykanthan/.config/zellij/plugins/zextract.wasm" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+        // Every running + exited session, with tabs/panes; switch, rename, kill.
         bind "Alt s" {
+            LaunchOrFocusPlugin "zellij:session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+        // zsm: open or create a session from a zoxide folder.
+        bind "Alt o" {
             LaunchOrFocusPlugin "https://github.com/liam-mackie/zsm/releases/download/v0.5.0/zsm.wasm" {
                 floating true
                 move_to_focused_tab true
@@ -198,7 +213,9 @@ keybinds clear-defaults=true {
             SwitchToMode "Locked"
         }
     }
-    shared_except "tmux" "locked" {
+    // The prefix works even while autolock has locked Zellij for nvim,
+    // Claude Code, omp, ... (Ctrl+a Ctrl+a sends a literal ^A to the pane).
+    shared_except "tmux" {
         bind "Ctrl a" { SwitchToMode "Tmux"; }
     }
     shared_except "normal" "locked" "entersearch" "renametab" "renamepane" {
@@ -289,7 +306,9 @@ keybinds clear-defaults=true {
         }
         // television: pick any cable channel (git, docker, k8s, sessions, ...)
         bind "t" {
-            Run "/opt/homebrew/bin/tv" "channels" {
+            // Wrapped so a failing tv leaves its error on screen (and in
+            // ~/Library/Logs/tv-zellij.log) instead of the pane vanishing.
+            Run "/bin/sh" "-c" "/opt/homebrew/bin/tv channels 2>>\"$HOME/Library/Logs/tv-zellij.log\"; rc=$?; [ $rc -eq 0 ] || { echo \"tv exited with $rc - see ~/Library/Logs/tv-zellij.log\"; tail -5 \"$HOME/Library/Logs/tv-zellij.log\"; read _; }" {
                 floating true
                 close_on_exit true
                 name "television"

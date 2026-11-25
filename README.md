@@ -71,13 +71,14 @@ Keys (stock bindings are cleared):
 | `Alt h/j/k/l` | move focus (h/l cross into the next tab) — works everywhere, even inside nvim/Claude |
 | `Alt n` · `Alt w` · `Alt e` · `Alt z` | new pane · toggle floating · float/embed · fullscreen |
 | `Alt 1-9` · `Alt [ ]` · `Alt = -` | go to tab · swap layout · resize |
-| `Alt s` · `Alt g` · `Alt ?` | sessions (zsm) · fuzzy tab picker (room) · key cheat sheet |
+| `Alt s` · `Alt o` · `Alt g` · `Alt ?` | all sessions (built-in manager) · new session from a zoxide folder (zsm) · fuzzy tab picker (room) · key cheat sheet |
 | `Alt .` · `Alt Shift .` | toggle lock by hand · toggle autolock |
 | `Ctrl a` then `\|` `-` `c` `,` `n` `b` `x` `z` `p` `r` `m` `[` `/` `s` `d` | tmux-style prefix: split right/down, new/rename/next/prev tab, close, zoom, floating, resize/move/scroll/search mode, sessions, detach |
 
 autolock switches Zellij to Locked whenever the focused pane runs anything
 but the shell, so Ctrl keys reach nvim, fzf, Claude Code, omp, k9s, ...
-untouched; only `Alt` keys stay with Zellij. Option+Left/Right are left to
+untouched; only `Alt` keys and the `Ctrl+a` prefix stay with Zellij
+(`Ctrl+a Ctrl+a` sends a literal Ctrl+a to the pane). Option+Left/Right are left to
 the shell as word jumps.
 
 ## Personal settings
